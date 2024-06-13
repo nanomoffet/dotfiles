@@ -71,6 +71,7 @@ brew "osx-cross/arm/arm-gcc-bin@10"
 brew "osx-cross/avr/avr-gcc@8", link: true
 brew "qmk/qmk/qmk"
 cask "firefox"
+cask "font-noto-color-emoji"
 cask "qmk-toolbox"
 cask "sf-symbols"
 cask "wezterm"
