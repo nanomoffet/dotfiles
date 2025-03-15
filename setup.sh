@@ -5,6 +5,8 @@ echo "Elevating privileges..."
 # Ask for the administrator password upfront.
 sudo -v
 
+osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/Users/mmoffet/.dotfiles/wallpaper.jpg"'
+
 # Disable smart quotes as they’re annoying when typing code
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
