@@ -1,0 +1,3 @@
+UNDOTTED="Brewfile"
+EXCLUDES="firefox wallpaper.jpg setup.sh zsh-theme README.md"
+

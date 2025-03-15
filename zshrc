@@ -89,9 +89,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 git
-zsh-autosuggestions
-zsh-syntax-highlighting
-zsh-history-substring-search
 docker
 colorize
 colored-man-pages
@@ -102,8 +99,9 @@ z
 vi-mode
 )
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
 # command for zsh-completions
-autoload -U compinit && compinit
+autoload -Uz compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
 
@@ -152,4 +150,7 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 
 source /Users/mmoffet/.config/broot/launcher/bash/br
-source /Users/mmoffet/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOMEBREW_PREFIX/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+
