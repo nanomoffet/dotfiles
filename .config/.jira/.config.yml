@@ -1,0 +1,1050 @@
+auth_type: basic
+board:
+    id: 65
+    name: 4tress board
+    type: scrum
+epic:
+    name: customfield_10011
+    link: customfield_10014
+installation: Cloud
+issue:
+    fields:
+        custom:
+            - name: Delivery status
+              key: customfield_10190
+              schema:
+                datatype: number
+            - name: Implementation plan
+              key: customfield_10070
+              schema:
+                datatype: string
+            - name: Delivery progress
+              key: customfield_10191
+              schema:
+                datatype: number
+            - name: Backout plan
+              key: customfield_10071
+              schema:
+                datatype: string
+            - name: Linked issues
+              key: customfield_10192
+              schema:
+                datatype: number
+            - name: Test plan
+              key: customfield_10072
+              schema:
+                datatype: string
+            - name: Comments
+              key: customfield_10193
+              schema:
+                datatype: number
+            - name: Source
+              key: customfield_10073
+              schema:
+                datatype: option
+            - name: Goal
+              key: customfield_10194
+              schema:
+                datatype: array
+                items: option
+            - name: Investigation reason
+              key: customfield_10074
+              schema:
+                datatype: option
+            - name: Roadmap
+              key: customfield_10195
+              schema:
+                datatype: option
+            - name: Root cause
+              key: customfield_10075
+              schema:
+                datatype: string
+            - name: Idea archived by
+              key: customfield_10196
+              schema:
+                datatype: array
+                items: user
+            - name: Workaround
+              key: customfield_10076
+              schema:
+                datatype: string
+            - name: Idea archived on
+              key: customfield_10197
+              schema:
+                datatype: datetime
+            - name: Time to close after resolution
+              key: customfield_10077
+              schema:
+                datatype: sd-servicelevelagreement
+            - name: Idea archived
+              key: customfield_10198
+              schema:
+                datatype: option
+            - name: Time to review normal change
+              key: customfield_10078
+              schema:
+                datatype: sd-servicelevelagreement
+            - name: Teams
+              key: customfield_10199
+              schema:
+                datatype: array
+                items: option
+            - name: Firm
+              key: customfield_10180
+              schema:
+                datatype: array
+                items: cmdb-object-field
+            - name: Data source
+              key: customfield_10060
+              schema:
+                datatype: string
+            - name: Lobbyist
+              key: customfield_10181
+              schema:
+                datatype: array
+                items: cmdb-object-field
+            - name: Time to resolution
+              key: customfield_10061
+              schema:
+                datatype: sd-servicelevelagreement
+            - name: Product Ops Platform
+              key: customfield_10182
+              schema:
+                datatype: option
+            - name: Responders
+              key: customfield_10062
+              schema:
+                datatype: array
+                items: string
+            - name: Ironclad Request Type
+              key: customfield_10183
+              schema:
+                datatype: option
+            - name: Urgency
+              key: customfield_10063
+              schema:
+                datatype: option
+            - name: Hazelversity Request Type
+              key: customfield_10184
+              schema:
+                datatype: option
+            - name: Pending reason
+              key: customfield_10064
+              schema:
+                datatype: option
+            - name: Atlas goals
+              key: customfield_10185
+              schema:
+                datatype: string
+            - name: Major incident
+              key: customfield_10065
+              schema:
+                datatype: string
+            - name: Atlas project
+              key: customfield_10186
+              schema:
+                datatype: string
+            - name: Severity
+              key: customfield_10066
+              schema:
+                datatype: option
+            - name: Atlas project status
+              key: customfield_10187
+              schema:
+                datatype: number
+            - name: Affected hardware
+              key: customfield_10067
+              schema:
+                datatype: string
+            - name: Impact
+              key: customfield_10188
+              schema:
+                datatype: number
+            - name: Planned start
+              key: customfield_10068
+              schema:
+                datatype: datetime
+            - name: Insights
+              key: customfield_10189
+              schema:
+                datatype: number
+            - name: Planned end
+              key: customfield_10069
+              schema:
+                datatype: datetime
+            - name: Context User Address or ID
+              key: customfield_10170
+              schema:
+                datatype: string
+            - name: Context OS
+              key: customfield_10171
+              schema:
+                datatype: array
+                items: option
+            - name: Context Browser
+              key: customfield_10172
+              schema:
+                datatype: array
+                items: option
+            - name: Checklist Completed
+              key: customfield_10052
+              schema:
+                datatype: string
+            - name: Context URL
+              key: customfield_10173
+              schema:
+                datatype: string
+            - name: Checklist Content YAML
+              key: customfield_10053
+              schema:
+                datatype: string
+            - name: Context Environment
+              key: customfield_10174
+              schema:
+                datatype: array
+                items: option
+            - name: Checklist Text
+              key: customfield_10054
+              schema:
+                datatype: string
+            - name: T-Shirt Size Estimate
+              key: customfield_10175
+              schema:
+                datatype: option
+            - name: Approver groups
+              key: customfield_10055
+              schema:
+                datatype: array
+                items: group
+            - name: Security bulletin
+              key: customfield_10176
+              schema:
+                datatype: string
+            - name: Compliance review scope
+              key: customfield_10056
+              schema:
+                datatype: string
+            - name: Gainsight Request Type
+              key: customfield_10177
+              schema:
+                datatype: option
+            - name: Details
+              key: customfield_10057
+              schema:
+                datatype: string
+            - name: Salesforce Request Type
+              key: customfield_10178
+              schema:
+                datatype: option
+            - name: Format
+              key: customfield_10058
+              schema:
+                datatype: string
+            - name: SFDC App
+              key: customfield_10179
+              schema:
+                datatype: array
+                items: option
+            - name: Affected services
+              key: customfield_10059
+              schema:
+                datatype: array
+                items: service-entity-field
+            - name: 'Acceptance Criteria: Scenario/List'
+              key: customfield_10160
+              schema:
+                datatype: string
+            - name: Satisfaction date
+              key: customfield_10040
+              schema:
+                datatype: datetime
+            - name: Testing Notes/Steps
+              key: customfield_10161
+              schema:
+                datatype: string
+            - name: Time to done
+              key: customfield_10041
+              schema:
+                datatype: sd-servicelevelagreement
+            - name: Story Risks
+              key: customfield_10162
+              schema:
+                datatype: string
+            - name: Time to first response
+              key: customfield_10042
+              schema:
+                datatype: sd-servicelevelagreement
+            - name: Problem Statement
+              key: customfield_10163
+              schema:
+                datatype: string
+            - name: Request language
+              key: customfield_10043
+              schema:
+                datatype: sd-request-lang
+            - name: Steps To Reproduce
+              key: customfield_10164
+              schema:
+                datatype: string
+            - name: Category
+              key: customfield_10044
+              schema:
+                datatype: option
+            - name: Actual Behavior
+              key: customfield_10165
+              schema:
+                datatype: string
+            - name: Project overview key
+              key: customfield_10045
+              schema:
+                datatype: string
+            - name: Expected Behavior
+              key: customfield_10166
+              schema:
+                datatype: string
+            - name: Project overview status
+              key: customfield_10046
+              schema:
+                datatype: string
+            - name: Consistently Reproducible
+              key: customfield_10167
+              schema:
+                datatype: option
+            - name: Context Application
+              key: customfield_10168
+              schema:
+                datatype: array
+                items: option
+            - name: Context User Role
+              key: customfield_10169
+              schema:
+                datatype: array
+                items: option
+            - name: Request participants
+              key: customfield_10038
+              schema:
+                datatype: array
+                items: user
+            - name: User/Job Story
+              key: customfield_10159
+              schema:
+                datatype: string
+            - name: Satisfaction
+              key: customfield_10039
+              schema:
+                datatype: sd-feedback
+            - name: Sentiment
+              key: customfield_10150
+              schema:
+                datatype: array
+                items: sd-sentiment
+            - name: Total forms
+              key: customfield_10030
+              schema:
+                datatype: number
+            - name: Goals
+              key: customfield_10151
+              schema:
+                datatype: array
+                items: Goals
+            - name: (Term) First name
+              key: customfield_10152
+              schema:
+                datatype: string
+            - name: (Term) Last name
+              key: customfield_10153
+              schema:
+                datatype: string
+            - name: Story Points
+              key: customfield_10033
+              schema:
+                datatype: number
+            - name: (Term) Address
+              key: customfield_10154
+              schema:
+                datatype: string
+            - name: Aha Link
+              key: customfield_10034
+              schema:
+                datatype: string
+            - name: (Term) Manager
+              key: customfield_10155
+              schema:
+                datatype: string
+            - name: (Term) Department
+              key: customfield_10156
+              schema:
+                datatype: string
+            - name: Work category
+              key: customfield_10036
+              schema:
+                datatype: string
+            - name: Email Address
+              key: customfield_10157
+              schema:
+                datatype: string
+            - name: Approvals
+              key: customfield_10037
+              schema:
+                datatype: sd-approvals
+            - name: Description/Story Problem Statement
+              key: customfield_10158
+              schema:
+                datatype: string
+            - name: Locked forms
+              key: customfield_10027
+              schema:
+                datatype: number
+            - name: Who will be this contractors manager?
+              key: customfield_10148
+              schema:
+                datatype: user
+            - name: Open forms
+              key: customfield_10028
+              schema:
+                datatype: number
+            - name: Link to Google Drive Folder
+              key: customfield_10149
+              schema:
+                datatype: string
+            - name: Submitted forms
+              key: customfield_10029
+              schema:
+                datatype: number
+            - name: Show Sprint Dates
+              key: customfield_10260
+              schema:
+                datatype: string
+            - name: App Push Results
+              key: customfield_10140
+              schema:
+                datatype: array
+                items: option
+            - name: Sprint
+              key: customfield_10020
+              schema:
+                datatype: array
+                items: json
+            - name: PSE/IT Level of Access Needed
+              key: customfield_10141
+              schema:
+                datatype: option
+            - name: Flagged
+              key: customfield_10021
+              schema:
+                datatype: array
+                items: option
+            - name: PSE/IT Request P-Level
+              key: customfield_10142
+              schema:
+                datatype: option
+            - name: Target start
+              key: customfield_10022
+              schema:
+                datatype: date
+            - name: Team and Guild Info
+              key: customfield_10143
+              schema:
+                datatype: array
+                items: option
+            - name: Target end
+              key: customfield_10023
+              schema:
+                datatype: date
+            - name: Contractor Last Name
+              key: customfield_10144
+              schema:
+                datatype: string
+            - name: '[CHART] Date of First Response'
+              key: customfield_10024
+              schema:
+                datatype: datetime
+            - name: Contractor's Work Email Address
+              key: customfield_10145
+              schema:
+                datatype: string
+            - name: '[CHART] Time in Status'
+              key: customfield_10025
+              schema:
+                datatype: any
+            - name: Contractor First Name
+              key: customfield_10146
+              schema:
+                datatype: string
+            - name: Contractor Organization
+              key: customfield_10147
+              schema:
+                datatype: option
+            - name: Story point estimate
+              key: customfield_10016
+              schema:
+                datatype: number
+            - name: Why do you need these permissions, and for how long?
+              key: customfield_10137
+              schema:
+                datatype: string
+            - name: Issue color
+              key: customfield_10017
+              schema:
+                datatype: string
+            - name: What permission(s) will you need?
+              key: customfield_10138
+              schema:
+                datatype: string
+            - name: Sum Story Points Below Epic
+              key: customfield_10259
+              schema:
+                datatype: number
+            - name: Parent Link
+              key: customfield_10018
+              schema:
+                datatype: any
+            - name: PSE/IT Support Reason
+              key: customfield_10139
+              schema:
+                datatype: array
+                items: option
+            - name: Rank
+              key: customfield_10019
+              schema:
+                datatype: any
+            - name: Themes
+              key: customfield_10250
+              schema:
+                datatype: array
+                items: option
+            - name: Platform with the issue
+              key: customfield_10130
+              schema:
+                datatype: option
+            - name: Functional Category
+              key: customfield_10251
+              schema:
+                datatype: array
+                items: option
+            - name: Request Type
+              key: customfield_10010
+              schema:
+                datatype: sd-customerrequesttype
+            - name: Email address of the person experiencing the issue
+              key: customfield_10131
+              schema:
+                datatype: string
+            - name: Barrier
+              key: customfield_10252
+              schema:
+                datatype: array
+                items: option
+            - name: Product categorization
+              key: customfield_10132
+              schema:
+                datatype: option-with-child
+            - name: Constraints
+              key: customfield_10253
+              schema:
+                datatype: string
+            - name: Epic Status
+              key: customfield_10012
+              schema:
+                datatype: option
+            - name: Operational categorization
+              key: customfield_10133
+              schema:
+                datatype: option-with-child
+            - name: Notion Key
+              key: customfield_10254
+              schema:
+                datatype: string
+            - name: Epic Color
+              key: customfield_10013
+              schema:
+                datatype: string
+            - name: Who is your direct supervisor?
+              key: customfield_10134
+              schema:
+                datatype: string
+            - name: Quarter
+              key: customfield_10255
+              schema:
+                datatype: option
+            - name: Which environment(s) do you need access to?
+              key: customfield_10135
+              schema:
+                datatype: array
+                items: option
+            - name: Completion
+              key: customfield_10256
+              schema:
+                datatype: string
+            - name: Start date
+              key: customfield_10015
+              schema:
+                datatype: date
+            - name: Which app(s) do you need access to?
+              key: customfield_10136
+              schema:
+                datatype: array
+                items: option
+            - name: End date
+              key: customfield_10257
+              schema:
+                datatype: date
+            - name: Change type
+              key: customfield_10005
+              schema:
+                datatype: option
+            - name: Student Name
+              key: customfield_10126
+              schema:
+                datatype: string
+            - name: ??? Start date
+              key: customfield_10247
+              schema:
+                datatype: datetime
+            - name: Change risk
+              key: customfield_10006
+              schema:
+                datatype: option
+            - name: Student DOB
+              key: customfield_10127
+              schema:
+                datatype: string
+            - name: Employee End date
+              key: customfield_10248
+              schema:
+                datatype: datetime
+            - name: Change reason
+              key: customfield_10007
+              schema:
+                datatype: option
+            - name: Visit Date and Time
+              key: customfield_10128
+              schema:
+                datatype: string
+            - name: PSE/IT Support Resolution v2
+              key: customfield_10249
+              schema:
+                datatype: array
+                items: option
+            - name: Actual start
+              key: customfield_10008
+              schema:
+                datatype: datetime
+            - name: How many people are experiencing this issue?
+              key: customfield_10129
+              schema:
+                datatype: option
+            - name: Actual end
+              key: customfield_10009
+              schema:
+                datatype: datetime
+            - name: Employee Start date
+              key: customfield_10240
+              schema:
+                datatype: date
+            - name: District Name
+              key: customfield_10120
+              schema:
+                datatype: string
+            - name: Accessibility needs
+              key: customfield_10241
+              schema:
+                datatype: string
+            - name: Development
+              key: customfield_10000
+              schema:
+                datatype: any
+            - name: Serial Number
+              key: customfield_10121
+              schema:
+                datatype: string
+            - name: User picker
+              key: customfield_10242
+              schema:
+                datatype: array
+                items: user
+            - name: Team
+              key: customfield_10001
+              schema:
+                datatype: team
+            - name: Initiator Name
+              key: customfield_10122
+              schema:
+                datatype: string
+            - name: Reason
+              key: customfield_10243
+              schema:
+                datatype: string
+            - name: Organizations
+              key: customfield_10002
+              schema:
+                datatype: array
+                items: sd-customerorganization
+            - name: Hotfix Description
+              key: customfield_10123
+              schema:
+                datatype: string
+            - name: Department
+              key: customfield_10244
+              schema:
+                datatype: string
+            - name: Approvers
+              key: customfield_10003
+              schema:
+                datatype: array
+                items: user
+            - name: Monster Hunter & Sonic 2 Story Description
+              key: customfield_10124
+              schema:
+                datatype: string
+            - name: Move date
+              key: customfield_10245
+              schema:
+                datatype: date
+            - name: Impact
+              key: customfield_10004
+              schema:
+                datatype: option
+            - name: Visit Status / Scheduling Issue
+              key: customfield_10125
+              schema:
+                datatype: option
+            - name: Leave type
+              key: customfield_10246
+              schema:
+                datatype: option
+            - name: Objective
+              key: customfield_10115
+              schema:
+                datatype: string
+            - name: City
+              key: customfield_10236
+              schema:
+                datatype: string
+            - name: Target and Audience Personas
+              key: customfield_10116
+              schema:
+                datatype: string
+            - name: Role
+              key: customfield_10237
+              schema:
+                datatype: string
+            - name: Stakeholders
+              key: customfield_10117
+              schema:
+                datatype: string
+            - name: Team
+              key: customfield_10238
+              schema:
+                datatype: string
+            - name: Dependencies
+              key: customfield_10118
+              schema:
+                datatype: string
+            - name: Department
+              key: customfield_10239
+              schema:
+                datatype: option
+            - name: School Name
+              key: customfield_10119
+              schema:
+                datatype: string
+            - name: Employee ID
+              key: customfield_10230
+              schema:
+                datatype: string
+            - name: Vulnerability
+              key: customfield_10110
+              schema:
+                datatype: any
+            - name: Company email address
+              key: customfield_10231
+              schema:
+                datatype: string
+            - name: Personal email address
+              key: customfield_10232
+              schema:
+                datatype: string
+            - name: PSE/IT Request Resolution
+              key: customfield_10112
+              schema:
+                datatype: option
+            - name: Mailing address
+              key: customfield_10233
+              schema:
+                datatype: string
+            - name: UX Required?
+              key: customfield_10113
+              schema:
+                datatype: array
+                items: option
+            - name: Residential status
+              key: customfield_10234
+              schema:
+                datatype: option
+            - name: Goal
+              key: customfield_10114
+              schema:
+                datatype: string
+            - name: Region
+              key: customfield_10235
+              schema:
+                datatype: option
+            - name: Special Considerations
+              key: customfield_10104
+              schema:
+                datatype: string
+            - name: Job title
+              key: customfield_10225
+              schema:
+                datatype: string
+            - name: Design
+              key: customfield_10105
+              schema:
+                datatype: array
+                items: design.field.name
+            - name: First name
+              key: customfield_10226
+              schema:
+                datatype: string
+            - name: Target Release
+              key: customfield_10106
+              schema:
+                datatype: version
+            - name: Middle name
+              key: customfield_10227
+              schema:
+                datatype: string
+            - name: Team Assigned in Aha at Publish
+              key: customfield_10107
+              schema:
+                datatype: option
+            - name: Last name
+              key: customfield_10228
+              schema:
+                datatype: string
+            - name: Linear Key
+              key: customfield_10108
+              schema:
+                datatype: string
+            - name: Date of birth
+              key: customfield_10229
+              schema:
+                datatype: date
+            - name: External issue ID
+              key: customfield_10109
+              schema:
+                datatype: string
+            - name: Manager
+              key: customfield_10220
+              schema:
+                datatype: array
+                items: user
+            - name: Target System
+              key: customfield_10100
+              schema:
+                datatype: string
+            - name: Last working day
+              key: customfield_10221
+              schema:
+                datatype: date
+            - name: Output Format
+              key: customfield_10101
+              schema:
+                datatype: string
+            - name: Resignation date
+              key: customfield_10222
+              schema:
+                datatype: date
+            - name: Tool
+              key: customfield_10102
+              schema:
+                datatype: string
+            - name: Employee location
+              key: customfield_10223
+              schema:
+                datatype: string
+            - name: Required Fields
+              key: customfield_10103
+              schema:
+                datatype: string
+            - name: Employment type
+              key: customfield_10224
+              schema:
+                datatype: option
+            - name: Business Impact
+              key: customfield_10215
+              schema:
+                datatype: number
+            - name: Business Urgency
+              key: customfield_10216
+              schema:
+                datatype: number
+            - name: Aha Issue Key
+              key: customfield_10217
+              schema:
+                datatype: string
+            - name: Insights
+              key: customfield_10218
+              schema:
+                datatype: string
+            - name: Case type
+              key: customfield_10219
+              schema:
+                datatype: option
+            - name: Confidence
+              key: customfield_10210
+              schema:
+                datatype: number
+            - name: Documents
+              key: customfield_10211
+              schema:
+                datatype: string
+            - name: Designs ready
+              key: customfield_10203
+              schema:
+                datatype: number
+            - name: Project start
+              key: customfield_10204
+              schema:
+                datatype: string
+            - name: Project target
+              key: customfield_10205
+              schema:
+                datatype: string
+            - name: Category
+              key: customfield_10206
+              schema:
+                datatype: option
+            - name: Value
+              key: customfield_10207
+              schema:
+                datatype: number
+            - name: Effort
+              key: customfield_10208
+              schema:
+                datatype: number
+            - name: Idea short description
+              key: customfield_10209
+              schema:
+                datatype: string
+            - name: Impact score
+              key: customfield_10200
+              schema:
+                datatype: number
+            - name: Customer segments
+              key: customfield_10201
+              schema:
+                datatype: array
+                items: option
+            - name: Spec ready
+              key: customfield_10202
+              schema:
+                datatype: number
+            - name: Questions To Be Answered
+              key: customfield_10091
+              schema:
+                datatype: string
+            - name: Audience
+              key: customfield_10092
+              schema:
+                datatype: string
+            - name: Update Cadence
+              key: customfield_10093
+              schema:
+                datatype: string
+            - name: Embedded
+              key: customfield_10094
+              schema:
+                datatype: option
+            - name: Requires Security
+              key: customfield_10095
+              schema:
+                datatype: option
+            - name: Security Details
+              key: customfield_10096
+              schema:
+                datatype: string
+            - name: Schema
+              key: customfield_10097
+              schema:
+                datatype: string
+            - name: Granularity
+              key: customfield_10098
+              schema:
+                datatype: string
+            - name: Source System
+              key: customfield_10099
+              schema:
+                datatype: string
+            - name: PHI
+              key: customfield_10080
+              schema:
+                datatype: option
+            - name: Department and Team
+              key: customfield_10081
+              schema:
+                datatype: option-with-child
+            - name: Reference
+              key: customfield_10082
+              schema:
+                datatype: string
+            - name: Product Area
+              key: customfield_10083
+              schema:
+                datatype: option
+            - name: Investment
+              key: customfield_10084
+              schema:
+                datatype: option
+            - name: QA Assignee
+              key: customfield_10085
+              schema:
+                datatype: user
+            - name: Desired Format
+              key: customfield_10086
+              schema:
+                datatype: option
+            - name: Bug Description
+              key: customfield_10089
+              schema:
+                datatype: string
+    types:
+        - id: "10060"
+          name: Initiative
+          handle: Initiative
+          subtask: false
+        - id: "10091"
+          name: Objective
+          handle: Objective
+          subtask: false
+        - id: "10000"
+          name: Epic
+          handle: Epic
+          subtask: false
+        - id: "10006"
+          name: Story
+          handle: Story
+          subtask: false
+        - id: "10007"
+          name: Task
+          handle: Task
+          subtask: false
+        - id: "10008"
+          name: Sub-task
+          handle: Sub-task
+          subtask: true
+        - id: "10009"
+          name: Bug
+          handle: Bug
+          subtask: false
+        - id: "10071"
+          name: Hotfix
+          handle: Hotfix
+          subtask: false
+login: michaelmoffet@hazel.co
+project:
+    key: T4
+    type: classic
+server: https://hazelhealth.atlassian.net
+timezone: America/Los_Angeles
