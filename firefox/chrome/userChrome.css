@@ -1,0 +1,86 @@
+
+#TabsToolbar:not([customizing="true"]) {
+  visibility: collapse !important;
+}
+/* if the titlebar is also hidden and your browser is maximized,
+ * clicking on the top pixel of the screen should trigger menu items (Fitt’s law)
+ */
+#toolbar-menubar {
+  padding-top: 0px !important;
+}
+
+#main-window[inFullscreen="true"] #sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"],
+#main-window[inFullscreen="true"] #sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] + splitter {
+    visibility: collapse;
+}
+
+#main-window[titlepreface^="[1] "] #sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] {
+  visibility: collapse;
+}
+
+#sidebar-box #sidebar-header {
+  visibility: collapse;
+}
+
+#sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] #sidebar-header {
+  visibility: collapse;
+}
+
+#sidebar-header {
+  background: #0C0C0D;
+  border-bottom: none !important;
+}
+#sidebar-splitter {
+  border-right-color: #0C0C0D !important;
+  border-left-color: #0C0C0D !important;
+}
+#sidebar-switcher-target,
+#sidebar-close {
+  filter: invert(100%);
+}
+
+#sidebar-box {
+  max-width: 100px;
+}
+
+/*
+ * Hide the back and forward buttons
+ *
+ * Contributor(s): Madis0, Timvde
+ */
+
+#main-window :-moz-any(#back-button, #forward-button) {
+  display: none !important;
+}
+
+/*
+ * Hide the puzzle icon indicating an extension page from the location bar
+ *
+ * Contributor(s): Madis0
+ */
+ 
+#urlbar[pageproxystate="valid"] > #identity-box.extensionPage > #extension-icon {
+  display: none !important;
+}
+
+/*
+ * Automatically hides the built-in reload button until navbar hover or page load
+ *
+ * Contributor(s): Madis0
+ */
+
+/* Hide the reload button by default */
+#reload-button {
+  transition: 300ms !important; /* Animate icon hiding */
+  opacity: 0 !important; /* Make icon transparent */
+  -moz-margin-end: -2em !important; /* Hide icon by offsetting it */
+}
+
+/* Show the reload button on navbar hover or page load (animation/stop button) */
+#nav-bar:hover #reload-button,
+#stop-reload-button[animate] > #reload-button:not([displaystop]) {
+  transition: 300ms !important; /* Animate icon showing */
+  opacity: 1 !important;  /* Make the icon opaque */
+  -moz-margin-end: initial !important; /* Use initial margins to show the icon */
+}
+

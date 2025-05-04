@@ -1,0 +1,7 @@
+# Ignore system-specific files
+.history
+.local
+.cache
+.DS_Store
+.config/.jira/
+.config/broot/launcher/*
