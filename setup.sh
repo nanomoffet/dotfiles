@@ -124,7 +124,6 @@ ln -s ~/.dotfiles/zsh-theme/dracula.zsh-theme ~/.oh-my-zsh/themes/dracula.zsh-th
 
 # copy core config files to Home
 cp .dotfiles/Brewfile Brewfile
-cp .dotfiles/rcrc .rcrc
 
 # Make sure we’re using the latest Homebrew.
 brew update
@@ -132,6 +131,7 @@ brew update
 brew bundle
 
 # Set up dotfiles
+stow -v .
 
 # start aerospace
 open -n /Applications/AeroSpace.app
@@ -144,5 +144,8 @@ brew services restart sketchybar
 
 # start JankyBorders
 brew services start borders
+
+# initiate starship
+eval "$(starship init zsh)"
 
 # copy firefox css tweaks and toggle customstyle config flag
