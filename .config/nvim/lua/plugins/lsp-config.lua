@@ -9,6 +9,15 @@ return {
           },
         },
       },
+      lua_ls = {
+        settings = {
+          lua = {
+            runtime = {
+              version = "5.4",
+            },
+          },
+        },
+      },
     },
   },
 }
