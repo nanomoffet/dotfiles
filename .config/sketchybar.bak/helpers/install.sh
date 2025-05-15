@@ -1,5 +1,7 @@
 # Packages
+brew install lua
 brew install switchaudio-osx
+brew install nowplaying-cli
 
 brew tap FelixKratz/formulae
 brew install sketchybar

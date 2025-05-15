@@ -60,7 +60,7 @@ slack:subscribe("mouse.clicked", function(env)
 	sbar.exec("open -a Slack")
 end)
 
-sbar.add("bracket", { slack.name }, {
+sbar.add("bracket", "widgets.slack.bracket", { slack.name }, {
 	background = {
 		color = colors.bg3,
 	},
