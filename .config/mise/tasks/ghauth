@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#MISE description="Update GH GPG Key"
+ECHO "HI"
