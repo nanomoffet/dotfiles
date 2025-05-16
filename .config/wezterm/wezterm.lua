@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
+local act = wezterm.action
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 config.color_scheme = "Tokyo Night"
 config.tab_bar_at_bottom = true
@@ -248,6 +249,15 @@ config.window_padding = {
 
 smart_splits.apply_to_config(config)
 
+-- Show which key table is active in the status area
+wezterm.on("update-right-status", function(window, pane)
+	local name = window:active_key_table()
+	if name then
+		name = "TABLE: " .. name
+	end
+	window:set_right_status(name or "")
+end)
+
 config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 8000 }
 config.colors = { compose_cursor = "orange" }
 config.keys = {
@@ -257,6 +267,30 @@ config.keys = {
 		key = "m",
 		mods = "CMD",
 		action = wezterm.action.DisableDefaultAssignment,
+	},
+	{
+		key = "r",
+		mods = "LEADER",
+		action = wezterm.action.ActivateKeyTable({
+			name = "resize_pane",
+			one_shot = false,
+		}),
+	},
+	{
+		key = "a",
+		mods = "LEADER",
+		action = wezterm.action.ActivateKeyTable({
+			name = "activate_pane",
+			timeout_milliseconds = 1000,
+		}),
+	},
+	{
+		key = "p",
+		mods = "LEADER",
+		action = wezterm.action.ActivateKeyTable({
+			name = "create_pane",
+			timeout_milliseconds = 1000,
+		}),
 	},
 	{
 		key = "|",
@@ -300,6 +334,62 @@ config.keys = {
 				end
 			end),
 		}),
+	},
+}
+
+config.key_tables = {
+	-- Defines the keys that are active in our resize-pane mode.
+	-- Since we're likely to want to make multiple adjustments,
+	-- we made the activation one_shot=false. We therefore need
+	-- to define a key assignment for getting out of this mode.
+	-- 'resize_pane' here corresponds to the name="resize_pane" in
+	-- the key assignments above.
+	resize_pane = {
+		{ key = "LeftArrow", action = act.AdjustPaneSize({ "Left", 1 }) },
+		{ key = "h", action = act.AdjustPaneSize({ "Left", 1 }) },
+
+		{ key = "RightArrow", action = act.AdjustPaneSize({ "Right", 1 }) },
+		{ key = "l", action = act.AdjustPaneSize({ "Right", 1 }) },
+
+		{ key = "UpArrow", action = act.AdjustPaneSize({ "Up", 1 }) },
+		{ key = "k", action = act.AdjustPaneSize({ "Up", 1 }) },
+
+		{ key = "DownArrow", action = act.AdjustPaneSize({ "Down", 1 }) },
+		{ key = "j", action = act.AdjustPaneSize({ "Down", 1 }) },
+
+		-- Cancel the mode by pressing escape
+		{ key = "Escape", action = "PopKeyTable" },
+	},
+
+	-- Defines the keys that are active in our activate-pane mode.
+	-- 'activate_pane' here corresponds to the name="activate_pane" in
+	-- the key assignments above.
+	activate_pane = {
+		{ key = "LeftArrow", action = act.ActivatePaneDirection("Left") },
+		{ key = "h", action = act.ActivatePaneDirection("Left") },
+
+		{ key = "RightArrow", action = act.ActivatePaneDirection("Right") },
+		{ key = "l", action = act.ActivatePaneDirection("Right") },
+
+		{ key = "UpArrow", action = act.ActivatePaneDirection("Up") },
+		{ key = "k", action = act.ActivatePaneDirection("Up") },
+
+		{ key = "DownArrow", action = act.ActivatePaneDirection("Down") },
+		{ key = "j", action = act.ActivatePaneDirection("Down") },
+	},
+
+	create_pane = {
+		{ key = "LeftArrow", action = wezterm.action.SplitPane({ direction = "Left", size = { Percent = 50 } }) },
+		{ key = "h", action = wezterm.action.SplitPane({ direction = "Left", size = { Percent = 50 } }) },
+
+		{ key = "RightArrow", action = wezterm.action.SplitPane({ direction = "Right", size = { Percent = 50 } }) },
+		{ key = "l", action = wezterm.action.SplitPane({ direction = "Right", size = { Percent = 50 } }) },
+
+		{ key = "UpArrow", action = wezterm.action.SplitPane({ direction = "Up", size = { Percent = 50 } }) },
+		{ key = "k", action = wezterm.action.SplitPane({ direction = "Up", size = { Percent = 50 } }) },
+
+		{ key = "DownArrow", action = wezterm.action.SplitPane({ direction = "Down", size = { Percent = 50 } }) },
+		{ key = "j", action = wezterm.action.SplitPane({ direction = "Down", size = { Percent = 50 } }) },
 	},
 }
 
