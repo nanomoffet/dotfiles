@@ -8,7 +8,7 @@ return {
         name = "DB Service",
         mode = "remote",
         request = "attach",
-        port = 40000,
+        port = 40008,
         substitutePath = {
           {
             from = "${workspaceFolder}",
