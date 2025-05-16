@@ -36,6 +36,8 @@ export PATH="/usr/local/opt/libpq/bin:$PATH"
 source ~/.shell-integration.sh
 eval "$(starship init zsh)"
 
+eval "$(mise activate zsh)"
+
 # Load seperated config files
 for conf in "$HOME/.config/zsh/config.d/"*.zsh; do
   source "${conf}"
