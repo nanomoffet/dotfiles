@@ -1,8 +1,3 @@
-# Load seperated config files
-for conf in "$HOME/.config/zsh/config.d/"*.zsh; do
-  source "${conf}"
-done
-unset conf
 
 # custom configurations
 
@@ -40,3 +35,10 @@ export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 source ~/.shell-integration.sh
 eval "$(starship init zsh)"
+
+# Load seperated config files
+for conf in "$HOME/.config/zsh/config.d/"*.zsh; do
+  source "${conf}"
+done
+unset conf
+
