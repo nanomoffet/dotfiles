@@ -16,6 +16,7 @@ mise
 z
 vi-mode
 )
+eval "$(zoxide init zsh)"
 
 export ZPLUG_HOME=/opt/homebrew/opt/zplug
 source $ZPLUG_HOME/init.zsh
