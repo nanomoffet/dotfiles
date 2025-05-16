@@ -1,3 +1,14 @@
 #!/usr/bin/env bash
 #MISE description="Update GH GPG Key"
-ECHO "HI"
+#MISE quiet=true
+if [[ $LOCAL_SCOPE == 'Peacock' ]]; then
+  if [[ $GH_USER != '206711371_nbcuni' ]]; then
+    gh auth switch
+  fi
+else
+  if [[ $GH_USER == '206711371_nbcuni' ]]; then
+    gh auth switch
+  fi
+fi
+
+mise set GITHUB_TOKEN=$(gh auth token)

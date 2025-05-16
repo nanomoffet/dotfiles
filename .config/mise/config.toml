@@ -8,3 +8,9 @@ _.source = "{{config_root}}/.scripts/load_env.sh"
 
 [task_config]
 includes = ["./tasks"]
+
+[hooks]
+cd = "mise run ghauth"
+
+[settings]
+experimental = true

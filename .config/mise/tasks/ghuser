@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+#MISE description="Fetch active GH user"
+GH_USER=$(gh api user | jq -r '.login')
+export GH_USER
