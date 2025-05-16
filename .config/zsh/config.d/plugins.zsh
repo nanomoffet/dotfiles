@@ -1,4 +1,3 @@
-eval "$(mise activate zsh --shims)"
 
 # Which plugins would you like to load? Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -16,7 +15,6 @@ mise
 z
 vi-mode
 )
-eval "$(zoxide init zsh)"
 
 export ZPLUG_HOME=/opt/homebrew/opt/zplug
 source $ZPLUG_HOME/init.zsh

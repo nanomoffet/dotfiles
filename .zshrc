@@ -20,7 +20,6 @@ COMPLETION_WAITING_DOTS="true"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
 # command for zsh-completions
 autoload -Uz compinit && compinit
 
@@ -28,13 +27,11 @@ source $ZSH/oh-my-zsh.sh
 
 zstyle ':completion:*' menu select
 
-eval "$(fnm env --use-on-cd)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 source ~/.shell-integration.sh
-eval "$(starship init zsh)"
 
 
 # Load seperated config files
@@ -43,5 +40,8 @@ for conf in "$HOME/.config/zsh/config.d/"*.zsh; do
 done
 unset conf
 
+eval "$(zoxide init zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(fnm env --use-on-cd)"
+eval "$(starship init zsh)"
 eval "$(mise activate zsh)"
-
