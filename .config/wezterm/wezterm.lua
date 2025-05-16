@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
+local act = wezterm.action
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 config.color_scheme = "Tokyo Night"
 config.tab_bar_at_bottom = true
@@ -248,7 +249,7 @@ config.window_padding = {
 
 smart_splits.apply_to_config(config)
 
-config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 2000 }
+config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 8000 }
 config.colors = { compose_cursor = "orange" }
 config.keys = {
 	-- Turn off the default CMD-m Hide action, allowing CMD-m to
@@ -256,37 +257,66 @@ config.keys = {
 	{
 		key = "m",
 		mods = "CMD",
-		action = wezterm.action.DisableDefaultAssignment,
+		action = act.DisableDefaultAssignment,
 	},
 	{
 		key = "|",
 		mods = "LEADER|SHIFT",
-		action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
+		action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
 	},
 	{
 		key = "-",
 		mods = "LEADER",
-		action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
+		action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
 	},
 	{
 		key = "h",
 		mods = "LEADER|CTRL",
-		action = wezterm.action.ActivatePaneDirection("Left"),
+		action = act.ActivatePaneDirection("Left"),
 	},
 	{
 		key = "l",
 		mods = "LEADER|CTRL",
-		action = wezterm.action.ActivatePaneDirection("Right"),
+		action = act.ActivatePaneDirection("Right"),
 	},
 	{
 		key = "k",
 		mods = "LEADER|CTRL",
-		action = wezterm.action.ActivatePaneDirection("Up"),
+		action = act.ActivatePaneDirection("Up"),
 	},
 	{
 		key = "j",
 		mods = "LEADER|CTRL",
-		action = wezterm.action.ActivatePaneDirection("Down"),
+		action = act.ActivatePaneDirection("Down"),
+	},
+	{
+		key = "H",
+		mods = "LEADER|SHIFT",
+		action = act.AdjustPaneSize({ "Left", 5 }),
+	},
+	{
+		key = "J",
+		mods = "LEADER|SHIFT",
+		action = act.AdjustPaneSize({ "Down", 5 }),
+	},
+	{ key = "K", mods = "LEADER", action = act.AdjustPaneSize({ "Up", 5 }) },
+	{
+		key = "L",
+		mods = "LEADER|SHIFT",
+		action = act.AdjustPaneSize({ "Right", 5 }),
+	},
+	{
+		key = "r",
+		mods = "LEADER|CTRL",
+		action = act.PromptInputLine({
+			description = "Enter new name for tab",
+			initial_value = "My Tab Name",
+			action = act(function(window, pane, line)
+				if line then
+					window:active_tab():set_title(line)
+				end
+			end),
+		}),
 	},
 }
 
