@@ -3,6 +3,7 @@ bitwarden-secrets-manager = "latest"
 usage = "latest"
 
 [env]
+PROJECT_ROOT = "~/projects/NBCUDTC/"
 LOCAL_SCOPE = "Peacock"
 _.source = "{{config_root}}/.scripts/load_env.sh"
 
