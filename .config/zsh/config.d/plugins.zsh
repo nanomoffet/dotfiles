@@ -1,8 +1,3 @@
-
-# Which plugins would you like to load? Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(
 git
 docker
@@ -24,7 +19,6 @@ zplug "plugins/git",   from:oh-my-zsh
 zplug "plugins/eza",   from:oh-my-zsh
 zplug 'dracula/zsh', as:theme
 
-# Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
     if read -q; then
@@ -32,7 +26,6 @@ if ! zplug check --verbose; then
     fi
 fi
 
-# Then, source plugins and add commands to $PATH
 zplug load
 
 source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh

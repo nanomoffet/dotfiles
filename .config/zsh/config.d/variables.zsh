@@ -1,6 +1,5 @@
-# env variables
-# add github token
 export GOPATH=$HOME/go
+export GOPRIVATE="github.com/NBCUDTC"
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
