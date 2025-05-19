@@ -16,3 +16,8 @@ alias tree='eza --tree $eza_params'
 alias m='mise'
 alias mr='mise run'
 alias dc='mise run debugchoose'
+alias zshconfig="vim ~/.zshrc"
+
+alias dfs="$HOME/.scripts/dotfiles.sh"
+alias pra="$HOME/.scripts/pull-request-approvals.sh"
+alias prc="$HOME/.scripts/pull-request-close.sh"

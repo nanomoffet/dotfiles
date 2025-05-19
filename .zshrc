@@ -1,16 +1,26 @@
+
 # init
+# The completion system activation
+autoload -Uz compinit && compinit
+
+# extended history size
+export HISTSIZE=1000000000
+export SAVEHIST=1000000000
+setopt EXTENDED_HISTORY
+
 bindkey -v
 COMPLETION_WAITING_DOTS="true"
-autoload -Uz compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
 # Env var exports
 export ZSH="$HOME/.oh-my-zsh"
 export GOPATH=$HOME/go
 # export GIT_TOKEN=
-export GOPRIVATE="github.com/NBCUDTC"
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
+
+
+[[ -f ~/.config/zsh/config.d/envvar.zsh ]] && source ~/.config/zsh/config.d/envvar.zsh
 
 export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
@@ -21,30 +31,7 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
   # Aliases
-alias vim='nvim'
-alias python='python3'
-alias pip='pip3'
-alias lzd='lazydocker'
-alias xz="exec zsh"
-alias cat='bat --theme ansi'
-alias top='btop'
-alias ls='eza $eza_params'
-alias l='eza --git-ignore $eza_params'
-alias ll='eza --all --header --long $eza_params'
-alias llm='eza --all --header --long --sort=modified $eza_params'
-alias la='eza -lbhHigUmuSa'
-alias lx='eza -lbhHigUmuSa@'
-alias lt='eza --tree $eza_params'
-alias tree='eza --tree $eza_params'
-alias m='mise'
-alias mr='mise run'
-alias dc='mise run debugchoose'
-
-alias dfs="$HOME/.scripts/dotfiles.sh"
-alias pra="$HOME/.scripts/pull-request-approvals.sh"
-alias prc="$HOME/.scripts/pull-request-close.sh"
-
-
+[[ -f ~/.config/zsh/config.d/aliases.zsh ]] && source ~/.config/zsh/config.d/aliases.zsh
 
 # Plugins
 plugins=(
@@ -67,6 +54,7 @@ zplug "zsh-users/zsh-syntax-highlighting"
 zplug "plugins/git",   from:oh-my-zsh
 zplug "plugins/eza",   from:oh-my-zsh
 zplug 'dracula/zsh', as:theme
+zplug "MichaelAquilina/zsh-you-should-use"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "

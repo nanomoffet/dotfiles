@@ -5,3 +5,4 @@
 .DS_Store
 .config/.jira/
 .config/broot/launcher/*
+.config/zsh/config.d/envvar.zsh
