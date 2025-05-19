@@ -162,7 +162,7 @@ function tab_title(tab_info)
 
 	title = string.gsub(title, "slemanager", "")
 	title = string.gsub(title, "-src", "")
-	title = string.gsub(title, "-", "")
+	title = string.gsub(title, "-", " ")
 	return title
 end
 
