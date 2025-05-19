@@ -1,6 +1,4 @@
-
 # init
-# The completion system activation
 autoload -Uz compinit && compinit
 
 # extended history size
@@ -10,12 +8,11 @@ setopt EXTENDED_HISTORY
 
 bindkey -v
 COMPLETION_WAITING_DOTS="true"
+export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
 
 # Env var exports
-export ZSH="$HOME/.oh-my-zsh"
 export GOPATH=$HOME/go
-# export GIT_TOKEN=
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 

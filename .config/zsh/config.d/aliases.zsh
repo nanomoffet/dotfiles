@@ -15,6 +15,8 @@ alias lt='eza --tree $eza_params'
 alias tree='eza --tree $eza_params'
 alias m='mise'
 alias mr='mise run'
+alias mu='mise use'
+alias mt='mise trust'
 alias dc='mise run debugchoose'
 alias zshconfig="vim ~/.zshrc"
 
