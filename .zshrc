@@ -1,4 +1,13 @@
+# init
+bindkey -v
+COMPLETION_WAITING_DOTS="true"
+autoload -Uz compinit && compinit
+source $ZSH/oh-my-zsh.sh
+
+# Env var exports
+export ZSH="$HOME/.oh-my-zsh"
 export GOPATH=$HOME/go
+# export GIT_TOKEN=
 export GOPRIVATE="github.com/NBCUDTC"
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
@@ -11,6 +20,7 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
+  # Aliases
 alias vim='nvim'
 alias python='python3'
 alias pip='pip3'
@@ -34,11 +44,9 @@ alias dfs="$HOME/.scripts/dotfiles.sh"
 alias pra="$HOME/.scripts/pull-request-approvals.sh"
 alias prc="$HOME/.scripts/pull-request-close.sh"
 
-bindkey -v
-
-export ZSH="$HOME/.oh-my-zsh"
 
 
+# Plugins
 plugins=(
 git
 docker
@@ -71,12 +79,6 @@ zplug load
 
 source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-COMPLETION_WAITING_DOTS="true"
-
-autoload -Uz compinit && compinit
-
-source $ZSH/oh-my-zsh.sh
-
 zstyle ':completion:*' menu select
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -84,6 +86,7 @@ export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 source ~/.shell-integration.sh
 
+# Startup scripts
 eval "$(zoxide init zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(fnm env --use-on-cd)"
