@@ -1,5 +1,6 @@
 # init
 autoload -Uz compinit && compinit
+bindkey -v
 
 # extended history size
 export HISTSIZE=1000000000
