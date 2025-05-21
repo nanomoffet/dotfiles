@@ -1,13 +1,11 @@
 # init
 autoload -Uz compinit && compinit
-bindkey -v
 
 # extended history size
 export HISTSIZE=1000000000
 export SAVEHIST=1000000000
 setopt EXTENDED_HISTORY
 
-bindkey -v
 COMPLETION_WAITING_DOTS="true"
 export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
@@ -78,3 +76,5 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(fnm env --use-on-cd)"
 eval "$(starship init zsh)"
 eval "$(mise activate zsh)"
+
+bindkey -v
