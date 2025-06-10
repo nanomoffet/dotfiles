@@ -192,4 +192,4 @@ run = ['move-node-to-workspace 4_docs']
 ## chat
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
-run = ['move-node-to-workspace 5_slack']
+run = ['move-node-to-workspace 5_chat']
