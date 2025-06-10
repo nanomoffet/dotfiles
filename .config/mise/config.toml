@@ -24,6 +24,7 @@ ripgrep = "latest"
 sd = "latest"
 starship = "latest"
 usage = "latest"
+uv = "latest"
 yazi = "latest"
 zoxide = "latest"
 

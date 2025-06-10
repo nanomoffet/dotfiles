@@ -115,13 +115,17 @@ alt-1 = 'workspace 1_dev'
 alt-2 = 'workspace 2_web'
 alt-3 = 'workspace 3_mail'
 alt-4 = 'workspace 4_docs'
-alt-5 = 'workspace 5_chat'
+alt-5 = 'workspace 5_slack'
+alt-6 = 'workspace 6_teams'
+alt-7 = 'workspace 7_call'
 
 alt-shift-1 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 1_dev && sketchybar --trigger space_windows_change'
 alt-shift-2 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 2_web && sketchybar --trigger space_windows_change'
 alt-shift-3 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 3_mail && sketchybar --trigger space_windows_change'
 alt-shift-4 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 4_docs && sketchybar --trigger space_windows_change'
-alt-shift-5 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 5_chat && sketchybar --trigger space_windows_change'
+alt-shift-5 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 5_slack && sketchybar --trigger space_windows_change'
+alt-shift-6 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 6_teams && sketchybar --trigger space_windows_change'
+alt-shift-7 = 'exec-and-forget aerospace move-node-to-workspace --focus-follows-window 7_call && sketchybar --trigger space_windows_change'
 
 alt-x = 'workspace-back-and-forth'
 alt-space = 'layout floating tiling'
@@ -188,4 +192,4 @@ run = ['move-node-to-workspace 4_docs']
 ## chat
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
-run = ['move-node-to-workspace 5_chat']
+run = ['move-node-to-workspace 5_slack']
