@@ -147,7 +147,6 @@ cmd-h = [] # Disable "hide application"
 2_web = ['main', 'built-in']
 3_mail = ['built-in']
 4_docs = ['built-in']
-5_chat = ['built-in']
 
 
 # floating rules
@@ -189,7 +188,6 @@ run = ['move-node-to-workspace 4_docs']
 if.app-id = 'md.obsidian'
 run = ['move-node-to-workspace 4_docs']
 
-## chat
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
-run = ['move-node-to-workspace 5_chat']
+run = ['move-node-to-workspace 5_slack']
