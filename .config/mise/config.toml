@@ -1,0 +1,39 @@
+[tools]
+awscli = "latest"
+bat = "latest"
+bat-extras = "latest"
+bitwarden = "latest"
+changie = "latest"
+duf = "latest"
+dust = "latest"
+eza = "latest"
+fd = "latest"
+fzf = "latest"
+gh = "latest"
+go = "latest"
+hurl = "latest"
+jq = "latest"
+lazydocker = "latest"
+lazygit = "latest"
+localstack = "latest"
+neovim = "latest"
+pipx = "latest"
+python = "latest"
+ripgrep = "latest"
+sd = "latest"
+starship = "latest"
+usage = "latest"
+uv = "latest"
+yazi = "latest"
+zoxide = "latest"
+
+[env]
+# PROJECT_ROOT = "~/projects/<YOUR_ORG>/"
+# LOCAL_SCOPE = "<YOUR_PROJECT>"
+_.source = "{{config_root}}/.scripts/load_env.sh"
+
+[task_config]
+includes = ["./tasks"]
+
+[settings]
+experimental = true
