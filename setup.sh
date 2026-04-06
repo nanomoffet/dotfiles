@@ -271,7 +271,20 @@ if ! command -v brew &>/dev/null; then
   fi
 fi
 
-eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || true
+# Add Homebrew to PATH — Apple Silicon (/opt/homebrew) or Intel (/usr/local)
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+if ! command -v brew &>/dev/null; then
+  echo "ERROR: Homebrew installation failed or brew is not in PATH."
+  echo "       Please install Homebrew manually and re-run this script."
+  diag_fail "Homebrew"
+  exit 1
+fi
+
 diag_ok "Homebrew"
 echo "Homebrew is ready."
 
@@ -311,7 +324,8 @@ echo "Oh My Zsh is ready."
 ###############################################################################
 
 echo ""
-BREW_ZSH="/opt/homebrew/bin/zsh"
+BREW_PREFIX="$(brew --prefix)"
+BREW_ZSH="$BREW_PREFIX/bin/zsh"
 if [ -x "$BREW_ZSH" ]; then
   if ! grep -qF "$BREW_ZSH" /etc/shells 2>/dev/null; then
     echo "Registering $BREW_ZSH in /etc/shells..."
@@ -507,7 +521,7 @@ echo "Config files copied."
 echo ""
 echo "Setting up zplug..."
 
-export ZPLUG_HOME=/opt/homebrew/opt/zplug
+export ZPLUG_HOME="$(brew --prefix)/opt/zplug"
 
 if [ ! -d "$ZPLUG_HOME" ]; then
   echo "  zplug not found at $ZPLUG_HOME."
@@ -531,7 +545,7 @@ echo "Installing zplug plugins..."
 
 if ! $DRY_RUN; then
   zsh -c '
-    export ZPLUG_HOME=/opt/homebrew/opt/zplug
+    export ZPLUG_HOME="$(brew --prefix)/opt/zplug"
     source "$ZPLUG_HOME/init.zsh"
 
     zplug "zsh-users/zsh-history-substring-search"
