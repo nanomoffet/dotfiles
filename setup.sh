@@ -575,6 +575,22 @@ else
   diag_ok "zsm plugin (already present)"
 fi
 
+# zellij-autolock
+ZELLIJ_AUTOLOCK_WASM="$ZELLIJ_PLUGINS_DIR/zellij-autolock.wasm"
+if [ ! -f "$ZELLIJ_AUTOLOCK_WASM" ]; then
+  echo "  Downloading zellij-autolock plugin..."
+  if run_cmd curl -fsSL -o "$ZELLIJ_AUTOLOCK_WASM" \
+    "https://github.com/fresh2dev/zellij-autolock/releases/latest/download/zellij-autolock.wasm"; then
+    diag_ok "zellij-autolock plugin downloaded"
+  else
+    diag_fail "zellij-autolock plugin download failed"
+  fi
+else
+  echo "  zellij-autolock.wasm already exists — skipping download."
+  diag_ok "zellij-autolock plugin (already present)"
+fi
+
+
 ###############################################################################
 # Zplug                                                                       #
 ###############################################################################
