@@ -19,6 +19,9 @@ plugins {
         welcome_screen true
     }
 
+    // zjstatus: customisable bottom status bar (tabs + mode + session + git + time)
+    zjstatus location="file:~/.config/zellij/plugins/zjstatus.wasm"
+
     // ZSM: zoxide session manager
     zsm location="file:~/.config/zellij/plugins/zsm.wasm" {
         floating true
@@ -358,3 +361,4 @@ keybinds clear-defaults=true {
 // ---------------------------------------------------------------------------
 
 theme "vesper"
+default_layout "default"

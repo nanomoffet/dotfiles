@@ -651,6 +651,22 @@ else
   diag_ok "zellij-autolock plugin (already present)"
 fi
 
+# zjstatus — customisable bottom status bar
+ZJSTATUS_VERSION="v0.22.0"
+ZJSTATUS_WASM="$ZELLIJ_PLUGINS_DIR/zjstatus.wasm"
+if [ ! -f "$ZJSTATUS_WASM" ]; then
+  echo "  Downloading zjstatus ${ZJSTATUS_VERSION}..."
+  if run_cmd curl -fsSL -o "$ZJSTATUS_WASM" \
+    "https://github.com/dj95/zjstatus/releases/download/${ZJSTATUS_VERSION}/zjstatus.wasm"; then
+    diag_ok "zjstatus plugin downloaded"
+  else
+    diag_fail "zjstatus plugin download failed"
+  fi
+else
+  echo "  zjstatus.wasm already exists — skipping download."
+  diag_ok "zjstatus plugin (already present)"
+fi
+
 ###############################################################################
 # Zplug                                                                       #
 ###############################################################################
