@@ -24,6 +24,7 @@ zplug "plugins/git",   from:oh-my-zsh
 zplug "plugins/eza",   from:oh-my-zsh
 zplug "dracula/zsh", as:theme
 zplug "MichaelAquilina/zsh-you-should-use"
+zplug "tranzystorekk/zellij-zsh"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "

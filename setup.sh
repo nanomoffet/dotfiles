@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
 # ---------------------------------------------------------------------------
 # Resolve the directory this script lives in (i.e. the repo root)
@@ -470,6 +470,7 @@ CONFIG_DIRS=(
   sketchybar
   wezterm
   yazi
+  zellij
   zsh
 )
 
@@ -513,6 +514,28 @@ fi
 diag_ok "Config files copied"
 echo "Config files copied."
 
+###############################################################################
+# Zellij Plugins                                                              #
+###############################################################################
+
+echo ""
+echo "--- Zellij Plugins ---"
+
+ZELLIJ_PLUGINS_DIR="$HOME/.config/zellij/plugins"
+run_cmd mkdir -p "$ZELLIJ_PLUGINS_DIR"
+
+# zsm — zoxide session manager
+ZSM_VERSION="v0.4.1"
+if [ ! -f "$ZELLIJ_PLUGINS_DIR/zsm.wasm" ]; then
+  echo "  Downloading zsm ${ZSM_VERSION}..."
+  run_cmd curl -sSL -o "$ZELLIJ_PLUGINS_DIR/zsm.wasm" \
+    "https://github.com/liam-mackie/zsm/releases/download/${ZSM_VERSION}/zsm.wasm"
+  diag_ok "zsm plugin downloaded"
+else
+  echo "  zsm.wasm already exists — skipping download."
+  diag_ok "zsm plugin (already present)"
+fi
+
 
 ###############################################################################
 # Zplug                                                                       #
@@ -554,6 +577,7 @@ if ! $DRY_RUN; then
     zplug "plugins/eza",   from:oh-my-zsh
     zplug "dracula/zsh", as:theme
     zplug "MichaelAquilina/zsh-you-should-use"
+    zplug "tranzystorekk/zellij-zsh"
 
     if ! zplug check; then
       zplug install
@@ -563,7 +587,7 @@ if ! $DRY_RUN; then
   '
   diag_ok "zplug plugins installed"
 else
-  echo "  [dry-run] zplug install (6 plugins)"
+  echo "  [dry-run] zplug install (7 plugins)"
 fi
 
 echo "Zsh plugin setup complete."
