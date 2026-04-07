@@ -1,25 +1,26 @@
 return {
   "mrjones2014/smart-splits.nvim",
   lazy = false,
+  opts = {
+    -- Use zellij as the multiplexer so Ctrl+h/j/k/l navigate to adjacent
+    -- zellij panes when at the edge of nvim splits.
+    multiplexer_backend = "zellij",
+  },
   keys = {
-    -- recommended mappings
-    -- resizing splits
-    -- these keymaps will also accept a range,
-    -- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
-    { "<A-h>", "<cmd>SmartResizeLeft", desc = "Resize Split Left" },
-    { "<A-j>", "<cmd>SmartResizeDown", desc = "Resize Split Down" },
-    { "<A-k>", "<cmd>SmartResizeUp", desc = "Resize Split Up" },
-    { "<A-l>", "<cmd>SmartResizeRight", desc = "Resize Split Right" },
-    -- moving between splits
-    { "<leader><C-h>", "<cmd>SmartCursorMoveLeft", desc = "Move Cursor Left" },
-    { "<leader><C-j>", "<cmd>SmartCursorMoveDown", desc = "Move Cursor Down" },
-    { "<leader><C-k>", "<cmd>SmartCursorMoveUp", desc = "Move Cursor Up" },
-    { "<leader><C-l>", "<cmd>SmartCursorMoveRight", desc = "Move Cursor Right" },
-    { "<leader><C-\\>", "<cmd>SmartCursorMovePrevious", desc = "Move Cursor Previous" },
-    -- swapping buffers between windows,
-    { "<leader><C-h>", "<cmd>SmartSwapLeft", desc = "Swap Buffer Left" },
-    { "<leader><C-j>", "<cmd>SmartSwapDown", desc = "Swap Buffer Down" },
-    { "<leader><C-k>", "<cmd>SmartSwapUp", desc = "Swap Buffer Up" },
-    { "<leader><C-l>", "<cmd>SmartSwapRight", desc = "Swap Buffer Right" },
+    -- Resizing splits (these keymaps also accept a count, e.g. `10<A-h>`)
+    { "<A-h>", function() require("smart-splits").resize_left() end, desc = "Resize Split Left" },
+    { "<A-j>", function() require("smart-splits").resize_down() end, desc = "Resize Split Down" },
+    { "<A-k>", function() require("smart-splits").resize_up() end, desc = "Resize Split Up" },
+    { "<A-l>", function() require("smart-splits").resize_right() end, desc = "Resize Split Right" },
+    -- Moving between nvim splits / zellij panes
+    { "<C-h>", function() require("smart-splits").move_cursor_left() end, desc = "Move Cursor Left" },
+    { "<C-j>", function() require("smart-splits").move_cursor_down() end, desc = "Move Cursor Down" },
+    { "<C-k>", function() require("smart-splits").move_cursor_up() end, desc = "Move Cursor Up" },
+    { "<C-l>", function() require("smart-splits").move_cursor_right() end, desc = "Move Cursor Right" },
+    -- Swapping buffers between windows
+    { "<leader><C-h>", function() require("smart-splits").swap_buf_left() end, desc = "Swap Buffer Left" },
+    { "<leader><C-j>", function() require("smart-splits").swap_buf_down() end, desc = "Swap Buffer Down" },
+    { "<leader><C-k>", function() require("smart-splits").swap_buf_up() end, desc = "Swap Buffer Up" },
+    { "<leader><C-l>", function() require("smart-splits").swap_buf_right() end, desc = "Swap Buffer Right" },
   },
 }

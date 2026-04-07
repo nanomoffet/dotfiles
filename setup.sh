@@ -13,8 +13,8 @@ DRY_RUN=false
 AUTO_YES=false
 for arg in "$@"; do
   case "$arg" in
-    --dry-run) DRY_RUN=true ;;
-    --yes|-y)  AUTO_YES=true ;;
+  --dry-run) DRY_RUN=true ;;
+  --yes | -y) AUTO_YES=true ;;
   esac
 done
 
@@ -34,9 +34,9 @@ declare -a DIAG_SKIP=()
 declare -a DIAG_FAIL=()
 declare -a DIAG_MANUAL=()
 
-diag_ok()     { DIAG_OK+=("$1"); }
-diag_skip()   { DIAG_SKIP+=("$1"); }
-diag_fail()   { DIAG_FAIL+=("$1"); }
+diag_ok() { DIAG_OK+=("$1"); }
+diag_skip() { DIAG_SKIP+=("$1"); }
+diag_fail() { DIAG_FAIL+=("$1"); }
 diag_manual() { DIAG_MANUAL+=("$1"); }
 
 run_cmd() {
@@ -61,7 +61,6 @@ ask_default() {
   fi
 }
 
-
 echo "------------------------------"
 echo "Dotfiles directory: $DOTFILES_DIR"
 $DRY_RUN && echo "*** DRY-RUN MODE — no changes will be made ***"
@@ -71,7 +70,11 @@ echo "Elevating privileges..."
 if ! $DRY_RUN; then
   sudo -v
   # Keep sudo alive for the duration of the script
-  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+  while true; do
+    sudo -n true
+    sleep 60
+    kill -0 "$$" || exit
+  done 2>/dev/null &
 fi
 
 ###############################################################################
@@ -187,9 +190,9 @@ echo "  2) ~/Desktop"
 echo "  3) ~/Documents/Screenshots"
 ask_default ss_choice "Choose [1/2/3]:" "1"
 case "${ss_choice:-1}" in
-  2) SCREENSHOT_DIR="$HOME/Desktop" ;;
-  3) SCREENSHOT_DIR="$HOME/Documents/Screenshots" ;;
-  *) SCREENSHOT_DIR="$HOME/Screenshots" ;;
+2) SCREENSHOT_DIR="$HOME/Desktop" ;;
+3) SCREENSHOT_DIR="$HOME/Documents/Screenshots" ;;
+*) SCREENSHOT_DIR="$HOME/Screenshots" ;;
 esac
 run_cmd mkdir -p "$SCREENSHOT_DIR"
 run_cmd defaults write com.apple.screencapture location -string "$SCREENSHOT_DIR"
@@ -200,8 +203,8 @@ echo "  1) png  (default, lossless)"
 echo "  2) jpg  (smaller files)"
 ask_default ss_fmt "Choose [1/2]:" "1"
 case "${ss_fmt:-1}" in
-  2) run_cmd defaults write com.apple.screencapture type -string "jpg" ;;
-  *) run_cmd defaults write com.apple.screencapture type -string "png" ;;
+2) run_cmd defaults write com.apple.screencapture type -string "jpg" ;;
+*) run_cmd defaults write com.apple.screencapture type -string "png" ;;
 esac
 
 # Disable screenshot shadow
@@ -419,7 +422,7 @@ if [ ! -f "$SSH_KEY" ]; then
     # Add to macOS keychain
     mkdir -p "$HOME/.ssh"
     if ! $DRY_RUN; then
-      cat > "$HOME/.ssh/config" <<'SSHEOF'
+      cat >"$HOME/.ssh/config" <<'SSHEOF'
 Host *
   AddKeysToAgent yes
   UseKeychain yes
@@ -468,6 +471,51 @@ run_cmd git config --global diff.colorMoved default
 diag_ok "Git global config"
 
 ###############################################################################
+# SketchyBar — SbarLua, fonts & helper binaries                               #
+###############################################################################
+echo ""
+echo "--- SketchyBar setup ---"
+# SbarLua — native Lua module required by sketchybar's Lua config
+SBARLUA_TARGET="$HOME/.local/share/sketchybar_lua/sketchybar.so"
+if [ ! -f "$SBARLUA_TARGET" ]; then
+  echo "Building and installing SbarLua..."
+  if ! $DRY_RUN; then
+    SBARLUA_DIR="/tmp/SbarLua"
+    rm -rf "$SBARLUA_DIR"
+    git clone https://github.com/FelixKratz/SbarLua.git "$SBARLUA_DIR"
+    (cd "$SBARLUA_DIR" && make install)
+    rm -rf "$SBARLUA_DIR"
+  else
+    echo "  [dry-run] git clone SbarLua && make install"
+  fi
+  diag_ok "SbarLua installed"
+else
+  echo "SbarLua is already installed."
+  diag_ok "SbarLua (already present)"
+fi
+# sketchybar-app-font
+APP_FONT="$HOME/Library/Fonts/sketchybar-app-font.ttf"
+if [ ! -f "$APP_FONT" ]; then
+  echo "Downloading sketchybar-app-font..."
+  run_cmd curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v2.0.5/sketchybar-app-font.ttf -o "$APP_FONT"
+  diag_ok "sketchybar-app-font installed"
+else
+  echo "sketchybar-app-font is already installed."
+  diag_ok "sketchybar-app-font (already present)"
+fi
+# Build C helper binaries (event providers, menus)
+SKETCHYBAR_HELPERS="$HOME/.config/sketchybar/helpers"
+if [ -f "$SKETCHYBAR_HELPERS/makefile" ]; then
+  echo "Building sketchybar C helper binaries..."
+  if ! $DRY_RUN; then
+    (cd "$SKETCHYBAR_HELPERS" && make)
+  else
+    echo "  [dry-run] (cd $SKETCHYBAR_HELPERS && make)"
+  fi
+  diag_ok "sketchybar helper binaries built"
+fi
+
+###############################################################################
 # Copy config files from repo to $HOME                                        #
 ###############################################################################
 
@@ -490,7 +538,7 @@ copy_item() {
   # If destination already exists and is identical, skip
   if [ -e "$dest" ]; then
     if diff -rq "$src" "$dest" >/dev/null 2>&1; then
-      return  # already up to date
+      return # already up to date
     fi
     echo "  Backing up existing $dest → ${dest}.backup"
     mv "$dest" "${dest}.backup"
@@ -506,7 +554,7 @@ copy_item() {
 
 # --- Root-level dotfiles → $HOME ---
 
-copy_item "$DOTFILES_DIR/.zshrc"                "$HOME/.zshrc"
+copy_item "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 
 # --- .config directories → $HOME/.config ---
 
@@ -602,7 +650,6 @@ else
   echo "  zellij-autolock.wasm already exists — skipping download."
   diag_ok "zellij-autolock plugin (already present)"
 fi
-
 
 ###############################################################################
 # Zplug                                                                       #
@@ -854,7 +901,7 @@ else
           sed -i '' "s|^export GITHUB_TOKEN=.*|export GITHUB_TOKEN=$GITHUB_TOKEN|" "$ZSHENV_FILE"
           echo "  GITHUB_TOKEN updated in $ZSHENV_FILE."
         else
-          echo "export GITHUB_TOKEN=$GITHUB_TOKEN" >> "$ZSHENV_FILE"
+          echo "export GITHUB_TOKEN=$GITHUB_TOKEN" >>"$ZSHENV_FILE"
           echo "  GITHUB_TOKEN appended to $ZSHENV_FILE."
         fi
       else
@@ -893,9 +940,9 @@ echo "    2) left"
 echo "    3) right"
 ask_default dock_pos "  Choose [1/2/3]:" "1"
 case "${dock_pos:-1}" in
-  2) run_cmd defaults write com.apple.dock orientation left   ;;
-  3) run_cmd defaults write com.apple.dock orientation right  ;;
-  *) run_cmd defaults write com.apple.dock orientation bottom ;;
+2) run_cmd defaults write com.apple.dock orientation left ;;
+3) run_cmd defaults write com.apple.dock orientation right ;;
+*) run_cmd defaults write com.apple.dock orientation bottom ;;
 esac
 run_cmd killall Dock 2>/dev/null || true
 diag_ok "Dock position set"
@@ -984,7 +1031,7 @@ if command -v sketchybar &>/dev/null && [ -d "$SKETCHYBAR_CONFIG" ]; then
   # Strip quarantine flags so macOS Gatekeeper doesn't block the helper binaries
   echo "  Removing quarantine flags from sketchybar helper binaries..."
   if ! $DRY_RUN; then
-    find "$SKETCHYBAR_CONFIG/helpers" -type f -perm +111 ! -name "*.sh" -exec xattr -d com.apple.quarantine {} 2>/dev/null \;
+    find "$SKETCHYBAR_CONFIG/helpers" -type f -perm +111 ! -name "*.sh" -exec xattr -d com.apple.quarantine {} \; 2>/dev/null
     diag_ok "sketchybar quarantine flags removed"
   else
     echo "  [dry-run] xattr -d com.apple.quarantine on helper binaries"

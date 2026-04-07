@@ -29,7 +29,10 @@ plugins {
     autolock location="file:~/.config/zellij/plugins/zellij-autolock.wasm" {
         is_enabled true
         triggers "nvim|vim|git|fzf|zoxide|atuin"
-        reaction_seconds "0.3"
+        // Increased from 0.3s: the first keypress (e.g. Ctrl+g) triggers the
+        // timer but subsequent keypresses don't extend it, so this window must
+        // be wide enough to complete a two-key zellij sequence after unlocking.
+        reaction_seconds "1.0"
         print_to_log true
     }
 }
@@ -50,11 +53,30 @@ load_plugins {
 keybinds clear-defaults=true {
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
-        // Disable autolock and unlock
+        // Disable autolock and unlock (use for extended zellij operations from neovim,
+        // then re-enable with Alt Shift z when done)
         bind "Alt z" {
             MessagePlugin "autolock" {payload "disable";};
             SwitchToMode "Normal";
         }
+        // Direct actions from locked/neovim pane via Alt keys — these bypass
+        // the Normal mode step entirely, avoiding the autolock re-lock race.
+        // Alt keys are safe here: they don't collide with neovim's standard
+        // terminal bindings and are intercepted before reaching the pane.
+        bind "Alt n" { NewPane; }
+        bind "Alt f" { ToggleFloatingPanes; }
+        bind "Alt h" { MoveFocusOrTab "Left"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
+        bind "Alt l" { MoveFocusOrTab "Right"; }
+        bind "Alt left" { MoveFocusOrTab "Left"; }
+        bind "Alt right" { MoveFocusOrTab "Right"; }
+        bind "Alt down" { MoveFocus "Down"; }
+        bind "Alt up" { MoveFocus "Up"; }
+        bind "Alt i" { MoveTab "left"; }
+        bind "Alt o" { MoveTab "right"; }
+        bind "Alt [" { PreviousSwapLayout; }
+        bind "Alt ]" { NextSwapLayout; }
     }
     normal {
         // Intercept Enter to trigger autolock assessment

@@ -1,11 +1,4 @@
-return {
-  {
-    "fresh2dev/zellij.vim",
-    lazy = false,
-    init = function()
-      -- Options:
-      -- vim.g.zellij_navigator_move_focus_or_tab = 1
-      -- vim.g.zellij_navigator_no_default_mappings = 1
-    end,
-  },
-}
+-- Navigation between nvim splits and zellij panes is handled by smart-splits.nvim
+-- (configured in smart-splits.lua with multiplexer_backend = "zellij").
+-- The fresh2dev/zellij.vim plugin is disabled to avoid conflicting Ctrl+h/j/k/l keymaps.
+return {}
