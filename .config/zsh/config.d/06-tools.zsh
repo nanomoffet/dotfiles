@@ -17,3 +17,10 @@ eval "$(starship init zsh)"
 
 # Mise (polyglot runtime manager)
 eval "$(mise activate zsh)"
+
+# Zellij (terminal multiplexer) – auto-attach or create default session
+if [[ -z "$ZELLIJ" && -z "$INTELLIJ_ENVIRONMENT_READER" ]]; then
+    if command -v zellij &>/dev/null; then
+        eval "$(zellij setup --generate-auto-start zsh)"
+    fi
+fi
