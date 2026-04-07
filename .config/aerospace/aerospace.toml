@@ -136,7 +136,7 @@ ctrl-alt-cmd-r = 'reload-config'
 ctrl-alt-shift-r = 'exec-and-forget  sketchybar --reload'
 
 # programm shortcuts
-cmd-alt-enter = 'exec-and-forget wezterm'
+cmd-alt-enter = 'exec-and-forget open -a Ghostty'
 cmd-alt-space = 'exec-and-forget open -a Finder.app'
 
 # Disable annoying and useless "hide application" shortcut
@@ -162,7 +162,7 @@ run = ['layout floating']
 
 ## dev
 [[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
+if.app-id = 'com.mitchellh.ghostty'
 run = ['move-node-to-workspace 1_dev']
 
 ## web

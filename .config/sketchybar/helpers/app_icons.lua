@@ -208,6 +208,6 @@ return {
 	["Thunderbird"] = ":thunderbird:",
 	["Betterbird"] = ":thunderbird:",
 	["Firefox"] = ":firefox:",
-	["WezTerm"] = ":wezterm:",
+	["Ghostty"] = ":ghostty:",
 	["default"] = ":default:",
 }

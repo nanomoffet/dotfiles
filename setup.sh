@@ -7,14 +7,26 @@ set -uo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ---------------------------------------------------------------------------
-# Dry-run support:  ./setup.sh --dry-run
+# Flag parsing:  ./setup.sh [--dry-run] [--yes|-y]
 # ---------------------------------------------------------------------------
 DRY_RUN=false
+AUTO_YES=false
 for arg in "$@"; do
   case "$arg" in
     --dry-run) DRY_RUN=true ;;
+    --yes|-y)  AUTO_YES=true ;;
   esac
 done
+
+# If --yes was not passed, offer to enable it interactively
+if ! $AUTO_YES && ! $DRY_RUN; then
+  echo ""
+  printf "Accept all default selections automatically? [y/N]: "
+  read -r auto_choice
+  if [[ "${auto_choice:-n}" =~ ^[Yy]$ ]]; then
+    AUTO_YES=true
+  fi
+fi
 
 # Diagnostics tracking
 declare -a DIAG_OK=()
@@ -35,9 +47,25 @@ run_cmd() {
   fi
 }
 
+# Prompt helper: ask_default VARNAME "prompt text" "default_value"
+# In --yes, --dry-run, or AUTO_YES mode the default is used without prompting.
+ask_default() {
+  local _var="$1" _prompt="$2" _default="$3"
+  if $DRY_RUN || $AUTO_YES; then
+    printf '%s %s\n' "$_prompt" "(auto: $_default)"
+    eval "$_var=\$_default"
+  else
+    printf '%s ' "$_prompt"
+    read -r _reply
+    eval "$_var=\${_reply:-\$_default}"
+  fi
+}
+
+
 echo "------------------------------"
 echo "Dotfiles directory: $DOTFILES_DIR"
 $DRY_RUN && echo "*** DRY-RUN MODE — no changes will be made ***"
+$AUTO_YES && echo "*** AUTO-YES MODE — all prompts will use defaults ***"
 echo "Elevating privileges..."
 
 if ! $DRY_RUN; then
@@ -157,13 +185,7 @@ echo "Where should screenshots be saved?"
 echo "  1) ~/Screenshots  (default)"
 echo "  2) ~/Desktop"
 echo "  3) ~/Documents/Screenshots"
-printf "Choose [1/2/3]: "
-if ! $DRY_RUN; then
-  read -r ss_choice
-else
-  ss_choice="1"
-  echo "[dry-run] defaulting to 1"
-fi
+ask_default ss_choice "Choose [1/2/3]:" "1"
 case "${ss_choice:-1}" in
   2) SCREENSHOT_DIR="$HOME/Desktop" ;;
   3) SCREENSHOT_DIR="$HOME/Documents/Screenshots" ;;
@@ -176,13 +198,7 @@ echo ""
 echo "Screenshot format?"
 echo "  1) png  (default, lossless)"
 echo "  2) jpg  (smaller files)"
-printf "Choose [1/2]: "
-if ! $DRY_RUN; then
-  read -r ss_fmt
-else
-  ss_fmt="1"
-  echo "[dry-run] defaulting to 1"
-fi
+ask_default ss_fmt "Choose [1/2]:" "1"
 case "${ss_fmt:-1}" in
   2) run_cmd defaults write com.apple.screencapture type -string "jpg" ;;
   *) run_cmd defaults write com.apple.screencapture type -string "png" ;;
@@ -238,22 +254,22 @@ else
 fi
 
 # FileVault
+fv_status=""
 if ! $DRY_RUN; then
   fv_status=$(fdesetup status 2>/dev/null || echo "")
-  if [[ "$fv_status" == *"FileVault is Off"* ]]; then
-    echo ""
-    printf "FileVault disk encryption is OFF. Enable it now? [y/N]: "
-    read -r fv_choice
-    if [[ "${fv_choice:-n}" =~ ^[Yy]$ ]]; then
-      sudo fdesetup enable
-      diag_ok "FileVault enabled"
-    else
-      diag_manual "FileVault is OFF — enable via System Settings > Privacy & Security"
-    fi
+fi
+if [[ "$fv_status" == *"FileVault is Off"* ]]; then
+  echo ""
+  ask_default fv_choice "FileVault disk encryption is OFF. Enable it now? [y/N]:" "n"
+  if [[ "${fv_choice}" =~ ^[Yy]$ ]]; then
+    run_cmd sudo fdesetup enable
+    diag_ok "FileVault enabled"
   else
-    echo "FileVault is already enabled."
-    diag_ok "FileVault (already enabled)"
+    diag_manual "FileVault is OFF — enable via System Settings > Privacy & Security"
   fi
+elif ! $DRY_RUN; then
+  echo "FileVault is already enabled."
+  diag_ok "FileVault (already enabled)"
 else
   echo "  [dry-run] fdesetup enable"
 fi
@@ -289,15 +305,44 @@ diag_ok "Homebrew"
 echo "Homebrew is ready."
 
 ###############################################################################
+# Bash Upgrade (required for associative arrays used later in this script)    #
+###############################################################################
+
+echo ""
+echo "Checking Bash version..."
+
+BASH_MAJOR="${BASH_VERSINFO[0]}"
+if [ "$BASH_MAJOR" -lt 4 ]; then
+  echo "  Current Bash is v${BASH_VERSION} — upgrading via Homebrew..."
+  run_cmd brew install bash
+  # Re-exec this script under the newly-installed Bash, preserving arguments.
+  BREW_BASH="$(brew --prefix)/bin/bash"
+  if [ -x "$BREW_BASH" ]; then
+    echo "  Re-launching script with $BREW_BASH..."
+    exec "$BREW_BASH" "$0" "$@"
+  else
+    echo "  Warning: Homebrew bash not found at $BREW_BASH after install."
+    diag_fail "Bash upgrade"
+  fi
+else
+  echo "  Bash v${BASH_VERSION} — OK."
+  diag_ok "Bash ≥ 4"
+fi
+
+###############################################################################
 # Brewfile                                                                    #
 ###############################################################################
 
 echo "Running Brewfile..."
-run_cmd brew update
+run_cmd brew update || echo "Warning: brew update failed — continuing anyway."
 
 if [ -f "$DOTFILES_DIR/Brewfile" ]; then
-  run_cmd brew bundle --file="$DOTFILES_DIR/Brewfile"
-  diag_ok "Brewfile installed"
+  if run_cmd brew bundle --file="$DOTFILES_DIR/Brewfile"; then
+    diag_ok "Brewfile installed"
+  else
+    echo "Warning: Some Brewfile entries failed to install — continuing anyway."
+    diag_fail "Brewfile (partial failure)"
+  fi
 else
   echo "Warning: No Brewfile found at $DOTFILES_DIR/Brewfile. Skipping brew bundle."
   diag_skip "Brewfile (not found)"
@@ -333,7 +378,7 @@ if [ -x "$BREW_ZSH" ]; then
   fi
   if [ "$SHELL" != "$BREW_ZSH" ]; then
     echo "Switching default shell to Homebrew zsh ($BREW_ZSH)..."
-    run_cmd chsh -s "$BREW_ZSH"
+    run_cmd sudo chsh -s "$BREW_ZSH" "$USER"
     diag_ok "Default shell → $BREW_ZSH"
   else
     echo "Default shell is already $BREW_ZSH."
@@ -353,13 +398,11 @@ echo "--- SSH & Git Identity ---"
 
 SSH_KEY="$HOME/.ssh/id_ed25519"
 if [ ! -f "$SSH_KEY" ]; then
-  printf "No SSH key found. Generate one now? [Y/n]: "
-  if ! $DRY_RUN; then read -r ssh_choice; else ssh_choice="y"; echo "[dry-run] y"; fi
-  if [[ "${ssh_choice:-y}" =~ ^[Yy]$ ]]; then
-    printf "Email for SSH key: "
-    if ! $DRY_RUN; then read -r ssh_email; else ssh_email="user@example.com"; echo "[dry-run] user@example.com"; fi
+  ask_default ssh_choice "No SSH key found. Generate one now? [Y/n]:" "y"
+  if [[ "${ssh_choice}" =~ ^[Yy]$ ]]; then
+    ask_default ssh_email "Email for SSH key:" "user@example.com"
     run_cmd ssh-keygen -t ed25519 -C "$ssh_email" -f "$SSH_KEY" -N ""
-    run_cmd eval "$(ssh-agent -s)"
+    if ! $DRY_RUN; then eval "$(ssh-agent -s)"; else echo "  [dry-run] eval ssh-agent"; fi
     # Add to macOS keychain
     mkdir -p "$HOME/.ssh"
     if ! $DRY_RUN; then
@@ -392,14 +435,12 @@ GIT_NAME=$(git config --global user.name 2>/dev/null || echo "")
 GIT_EMAIL=$(git config --global user.email 2>/dev/null || echo "")
 
 if [ -z "$GIT_NAME" ]; then
-  printf "Git user.name: "
-  if ! $DRY_RUN; then read -r GIT_NAME; else GIT_NAME="Your Name"; echo "[dry-run] Your Name"; fi
+  ask_default GIT_NAME "Git user.name:" "Your Name"
   run_cmd git config --global user.name "$GIT_NAME"
 fi
 
 if [ -z "$GIT_EMAIL" ]; then
-  printf "Git user.email: "
-  if ! $DRY_RUN; then read -r GIT_EMAIL; else GIT_EMAIL="you@example.com"; echo "[dry-run] you@example.com"; fi
+  ask_default GIT_EMAIL "Git user.email:" "you@example.com"
   run_cmd git config --global user.email "$GIT_EMAIL"
 fi
 
@@ -453,7 +494,6 @@ copy_item() {
 # --- Root-level dotfiles → $HOME ---
 
 copy_item "$DOTFILES_DIR/.zshrc"                "$HOME/.zshrc"
-copy_item "$DOTFILES_DIR/.shell-integration.sh" "$HOME/.shell-integration.sh"
 
 # --- .config directories → $HOME/.config ---
 
@@ -463,12 +503,11 @@ CONFIG_DIRS=(
   btop
   configstore
   gh-dash
-  iterm2
+  ghostty
   karabiner
   mise
   nvim
   sketchybar
-  wezterm
   yazi
   zellij
   zsh
@@ -536,7 +575,6 @@ else
   diag_ok "zsm plugin (already present)"
 fi
 
-
 ###############################################################################
 # Zplug                                                                       #
 ###############################################################################
@@ -549,7 +587,7 @@ export ZPLUG_HOME="$(brew --prefix)/opt/zplug"
 if [ ! -d "$ZPLUG_HOME" ]; then
   echo "  zplug not found at $ZPLUG_HOME."
   echo "  It should have been installed via the Brewfile. Attempting brew install..."
-  run_cmd brew install zplug
+  run_cmd brew install zplug || echo "Warning: brew install zplug failed."
 fi
 
 if [ ! -f "$ZPLUG_HOME/init.zsh" ]; then
@@ -635,7 +673,7 @@ done
 if $FONTS_MISSING; then
   echo ""
   echo "  Attempting to install missing fonts via Homebrew..."
-  run_cmd brew bundle --file="$DOTFILES_DIR/Brewfile" --no-upgrade
+  run_cmd brew bundle --file="$DOTFILES_DIR/Brewfile" --no-upgrade || true
 
   # Re-check after install attempt
   STILL_MISSING=false
@@ -671,11 +709,10 @@ run_cmd mkdir -p "$HOME/go"
 # Node.js via fnm
 if command -v fnm &>/dev/null; then
   echo ""
-  printf "Install Node.js LTS via fnm? [Y/n]: "
-  if ! $DRY_RUN; then read -r node_choice; else node_choice="y"; echo "[dry-run] y"; fi
-  if [[ "${node_choice:-y}" =~ ^[Yy]$ ]]; then
-    run_cmd fnm install --lts
-    run_cmd fnm default lts-latest
+  ask_default node_choice "Install Node.js LTS via fnm? [Y/n]:" "y"
+  if [[ "${node_choice}" =~ ^[Yy]$ ]]; then
+    run_cmd fnm install --lts || { diag_fail "fnm install --lts"; }
+    run_cmd fnm default lts-latest || true
     diag_ok "Node.js LTS (fnm)"
   else
     diag_skip "Node.js LTS install"
@@ -687,10 +724,9 @@ fi
 # Mise — install runtimes from config
 if command -v mise &>/dev/null; then
   echo ""
-  printf "Run 'mise install' to install configured runtimes? [Y/n]: "
-  if ! $DRY_RUN; then read -r mise_choice; else mise_choice="y"; echo "[dry-run] y"; fi
-  if [[ "${mise_choice:-y}" =~ ^[Yy]$ ]]; then
-    run_cmd mise install --yes
+  ask_default mise_choice "Run 'mise install' to install configured runtimes? [Y/n]:" "y"
+  if [[ "${mise_choice}" =~ ^[Yy]$ ]]; then
+    run_cmd mise install --yes || { diag_fail "mise install"; }
     diag_ok "mise runtimes installed"
   else
     diag_skip "mise install"
@@ -704,9 +740,8 @@ if command -v pipx &>/dev/null; then
   echo ""
   echo "Install common Python tools via pipx?"
   echo "  Available: black, ruff, httpie, poetry"
-  printf "Install all? [y/N]: "
-  if ! $DRY_RUN; then read -r pipx_choice; else pipx_choice="n"; echo "[dry-run] n"; fi
-  if [[ "${pipx_choice:-n}" =~ ^[Yy]$ ]]; then
+  ask_default pipx_choice "Install all? [y/N]:" "n"
+  if [[ "${pipx_choice}" =~ ^[Yy]$ ]]; then
     for tool in black ruff httpie poetry; do
       run_cmd pipx install "$tool" 2>/dev/null || echo "  $tool may already be installed."
     done
@@ -726,9 +761,8 @@ echo ""
 if command -v op &>/dev/null; then
   op_status=$(op account list 2>/dev/null || echo "")
   if [ -z "$op_status" ]; then
-    printf "1Password CLI is installed but not signed in. Sign in now? [y/N]: "
-    if ! $DRY_RUN; then read -r op_choice; else op_choice="n"; echo "[dry-run] n"; fi
-    if [[ "${op_choice:-n}" =~ ^[Yy]$ ]]; then
+    ask_default op_choice "1Password CLI is installed but not signed in. Sign in now? [y/N]:" "n"
+    if [[ "${op_choice}" =~ ^[Yy]$ ]]; then
       echo "  Running 'op signin'... follow the prompts."
       if ! $DRY_RUN; then
         eval "$(op signin)" && diag_ok "1Password CLI signed in" || diag_fail "1Password CLI sign-in failed"
@@ -758,9 +792,8 @@ else
   # Authenticate if not already signed in
   if ! gh auth status &>/dev/null; then
     echo "  GitHub CLI is not authenticated."
-    printf "  Authenticate with GitHub now? [Y/n]: "
-    if ! $DRY_RUN; then read -r gh_auth_choice; else gh_auth_choice="y"; echo "[dry-run] y"; fi
-    if [[ "${gh_auth_choice:-y}" =~ ^[Yy]$ ]]; then
+    ask_default gh_auth_choice "  Authenticate with GitHub now? [Y/n]:" "y"
+    if [[ "${gh_auth_choice}" =~ ^[Yy]$ ]]; then
       if ! $DRY_RUN; then
         gh auth login --web --git-protocol https
       else
@@ -829,8 +862,7 @@ echo "  AeroSpace recommends placing the Dock at the bottom."
 echo "    1) bottom  (AeroSpace recommended)"
 echo "    2) left"
 echo "    3) right"
-printf "  Choose [1/2/3]: "
-if ! $DRY_RUN; then read -r dock_pos; else dock_pos="1"; echo "[dry-run] 1"; fi
+ask_default dock_pos "  Choose [1/2/3]:" "1"
 case "${dock_pos:-1}" in
   2) run_cmd defaults write com.apple.dock orientation left   ;;
   3) run_cmd defaults write com.apple.dock orientation right  ;;
@@ -841,9 +873,8 @@ diag_ok "Dock position set"
 
 # 4. Reduce motion (makes Space switching faster if user ever triggers it)
 echo ""
-printf "  Enable 'Reduce motion' for faster animations? [Y/n]: "
-if ! $DRY_RUN; then read -r motion_choice; else motion_choice="y"; echo "[dry-run] y"; fi
-if [[ "${motion_choice:-y}" =~ ^[Yy]$ ]]; then
+ask_default motion_choice "  Enable 'Reduce motion' for faster animations? [Y/n]:" "y"
+if [[ "${motion_choice}" =~ ^[Yy]$ ]]; then
   run_cmd sudo defaults write com.apple.universalaccess reduceMotion -bool true
   diag_ok "Reduce motion enabled (AeroSpace recommendation)"
 fi
@@ -919,6 +950,15 @@ if command -v sketchybar &>/dev/null && [ -d "$SKETCHYBAR_CONFIG" ]; then
     (cd "$SKETCHYBAR_CONFIG/helpers" && make) && diag_ok "sketchybar helpers built" || diag_fail "sketchybar helpers build failed"
   else
     echo "  [dry-run] cd $SKETCHYBAR_CONFIG/helpers && make"
+  fi
+
+  # Strip quarantine flags so macOS Gatekeeper doesn't block the helper binaries
+  echo "  Removing quarantine flags from sketchybar helper binaries..."
+  if ! $DRY_RUN; then
+    find "$SKETCHYBAR_CONFIG/helpers" -type f -perm +111 ! -name "*.sh" -exec xattr -d com.apple.quarantine {} 2>/dev/null \;
+    diag_ok "sketchybar quarantine flags removed"
+  else
+    echo "  [dry-run] xattr -d com.apple.quarantine on helper binaries"
   fi
 else
   echo "  sketchybar not installed or config not found — skipping."
