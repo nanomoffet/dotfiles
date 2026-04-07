@@ -217,6 +217,19 @@ run_cmd defaults write -g NSWindowShouldDragOnGesture -bool true
 # Disable Gatekeeper quarantine "are you sure?" dialog for downloaded apps
 run_cmd defaults write com.apple.LaunchServices LSQuarantine -bool false
 
+# --- Keyboard Shortcuts (Symbolic Hot Keys) ---
+# Disable built-in shortcuts that conflict with AeroSpace / Raycast / etc.
+# Reference: com.apple.symbolichotkeys AppleSymbolicHotKeys
+#   IDs 15–26  – Mission Control, Spaces, App Windows, Show Desktop, etc.
+#   ID  60     – Spotlight search (Ctrl+Space)
+#   ID  61     – Finder search window (Ctrl+Opt+Space)
+#   ID  164    – Show Notification Center
+
+for hk_id in 15 16 17 18 19 20 21 22 23 24 25 26 60 61 164; do
+  run_cmd defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys \
+    -dict-add "$hk_id" '{ enabled = 0; }'
+done
+
 # --- Media Keys ---
 
 # Prevent Music app from hijacking media keys (modern launchctl syntax)
