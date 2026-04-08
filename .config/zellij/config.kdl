@@ -38,6 +38,11 @@ plugins {
         reaction_seconds "1.0"
         print_to_log true
     }
+
+    // zellij-forgot: floating keybind cheatsheet (Ctrl o → ?)
+    forgot location="file:~/.config/zellij/plugins/zellij_forgot.wasm" {
+        floating true
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -47,6 +52,7 @@ plugins {
 load_plugins {
     zellij:link
     autolock
+    welcome-screen
 }
 
 // ---------------------------------------------------------------------------
@@ -225,6 +231,13 @@ keybinds clear-defaults=true {
             }
             SwitchToMode "normal"
         }
+        bind "?" {
+            LaunchOrFocusPlugin "forgot" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "normal"
+        }
     }
     // Autolock: enable from any mode
     shared {
@@ -360,5 +373,5 @@ keybinds clear-defaults=true {
 // Settings
 // ---------------------------------------------------------------------------
 
-theme "vesper"
+theme "dracula"
 default_layout "default"
