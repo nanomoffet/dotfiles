@@ -3,49 +3,49 @@ layout {
         children
         pane size=1 borderless=true {
             plugin location="zjstatus" {
-                format_left   "{mode} #[fg=#FFC799,bold]{session} "
+                format_left   "{mode} #[fg=#ffb86c,bold]{session} "
                 format_center "{tabs}"
                 format_right  "{command_git_branch} {datetime}"
-                format_space  "#[bg=#101010]"
+                format_space  "#[bg=#282a36]"
 
                 border_enabled "false"
 
                 hide_frame_for_single_pane "true"
 
-                // Mode indicators — colours mirror the autolock/keybind palette.
+                // Mode indicators — Dracula palette
                 // Locked (nvim owns the pane) gets a distinct lavender pill so
                 // it's obvious at a glance that zellij keybinds are suspended.
-                mode_normal      "#[bg=#101010,fg=#3D3D3D] NORMAL "
-                mode_locked      "#[bg=#ACA1CF,fg=#101010] LOCK "
-                mode_pane        "#[bg=#FFC799,fg=#101010] PANE "
-                mode_tab         "#[bg=#90B99F,fg=#101010] TAB "
-                mode_resize      "#[bg=#F5A191,fg=#101010] RESIZE "
-                mode_move        "#[bg=#EA83A5,fg=#101010] MOVE "
-                mode_scroll      "#[bg=#E29ECA,fg=#101010] SCROLL "
-                mode_session     "#[bg=#ACA1CF,fg=#101010] SESSION "
-                mode_tmux        "#[bg=#FFC799,fg=#101010] TMUX "
-                mode_search      "#[bg=#E29ECA,fg=#101010] SEARCH "
-                mode_entersearch "#[bg=#E29ECA,fg=#101010] SEARCH "
-                mode_renametab   "#[bg=#90B99F,fg=#101010] RENAME "
-                mode_renamepane  "#[bg=#FFC799,fg=#101010] RENAME "
-                mode_prompt      "#[bg=#101010,fg=#3D3D3D] NORMAL "
+                mode_normal      "#[bg=#282a36,fg=#6272a4] NORMAL "
+                mode_locked      "#[bg=#bd93f9,fg=#282a36] LOCK "
+                mode_pane        "#[bg=#ffb86c,fg=#282a36] PANE "
+                mode_tab         "#[bg=#50fa7b,fg=#282a36] TAB "
+                mode_resize      "#[bg=#ff5555,fg=#282a36] RESIZE "
+                mode_move        "#[bg=#ff79c6,fg=#282a36] MOVE "
+                mode_scroll      "#[bg=#8be9fd,fg=#282a36] SCROLL "
+                mode_session     "#[bg=#bd93f9,fg=#282a36] SESSION "
+                mode_tmux        "#[bg=#ffb86c,fg=#282a36] TMUX "
+                mode_search      "#[bg=#8be9fd,fg=#282a36] SEARCH "
+                mode_entersearch "#[bg=#8be9fd,fg=#282a36] SEARCH "
+                mode_renametab   "#[bg=#50fa7b,fg=#282a36] RENAME "
+                mode_renamepane  "#[bg=#ffb86c,fg=#282a36] RENAME "
+                mode_prompt      "#[bg=#282a36,fg=#6272a4] NORMAL "
 
-                // Tabs — active tab is vesper green, inactive is very dim
-                tab_normal            "#[fg=#3D3D3D] {name} "
-                tab_active            "#[fg=#90B99F,bold] {name} "
-                tab_normal_fullscreen "#[fg=#3D3D3D] {name} 󰊓 "
-                tab_active_fullscreen "#[fg=#90B99F,bold] {name} 󰊓 "
-                tab_normal_sync       "#[fg=#3D3D3D] {name}  "
-                tab_active_sync       "#[fg=#90B99F,bold] {name}  "
+                // Tabs — ribbon navigation: pill-shaped tabs with powerline arrows
+                tab_normal            "#[bg=#282a36,fg=#44475a]#[bg=#44475a,fg=#6272a4] {name} #[bg=#282a36,fg=#44475a]"
+                tab_active            "#[bg=#282a36,fg=#50fa7b]#[bg=#50fa7b,fg=#282a36,bold] {name} #[bg=#282a36,fg=#50fa7b]"
+                tab_normal_fullscreen "#[bg=#282a36,fg=#44475a]#[bg=#44475a,fg=#6272a4] {name} 󰊛 #[bg=#282a36,fg=#44475a]"
+                tab_active_fullscreen "#[bg=#282a36,fg=#50fa7b]#[bg=#50fa7b,fg=#282a36,bold] {name} 󰊛 #[bg=#282a36,fg=#50fa7b]"
+                tab_normal_sync       "#[bg=#282a36,fg=#44475a]#[bg=#44475a,fg=#6272a4] {name}  #[bg=#282a36,fg=#44475a]"
+                tab_active_sync       "#[bg=#282a36,fg=#50fa7b]#[bg=#50fa7b,fg=#282a36,bold] {name}  #[bg=#282a36,fg=#50fa7b]"
 
                 // Git branch — update every 10 s, static render
                 command_git_branch_command    "git rev-parse --abbrev-ref HEAD"
-                command_git_branch_format     "#[fg=#3D3D3D]  {stdout} "
+                command_git_branch_format     "#[fg=#6272a4]  {stdout} "
                 command_git_branch_interval   "10"
                 command_git_branch_rendermode "static"
 
                 // Time
-                datetime        "#[fg=#3D3D3D]  {format} "
+                datetime        "#[fg=#6272a4]  {format} "
                 datetime_format "%H:%M"
             }
         }

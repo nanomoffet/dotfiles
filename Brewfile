@@ -81,6 +81,7 @@ brew "fnm"
 brew "lua"
 brew "mise"
 brew "nvm"
+brew "rust"
 brew "delve"
 
 # ---------------------------------------------------------------------------

@@ -24,3 +24,11 @@ if [[ -z "$ZELLIJ" && -z "$INTELLIJ_ENVIRONMENT_READER" ]]; then
         eval "$(zellij setup --generate-auto-start zsh)"
     fi
 fi
+
+# Zellij tab renaming – keep tab name in sync with current directory
+if [[ -n "$ZELLIJ" ]]; then
+    _zellij_tab_rename() { zellij action rename-tab "$(basename "$PWD")"; }
+    autoload -Uz add-zsh-hook
+    add-zsh-hook chpwd _zellij_tab_rename
+    _zellij_tab_rename   # set name on shell start
+fi

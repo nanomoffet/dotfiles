@@ -667,6 +667,55 @@ else
   diag_ok "zjstatus plugin (already present)"
 fi
 
+# zellij-forgot — floating keybind cheatsheet
+ZELLIJ_FORGOT_VERSION="0.4.2"
+ZELLIJ_FORGOT_WASM="$ZELLIJ_PLUGINS_DIR/zellij_forgot.wasm"
+if [ ! -f "$ZELLIJ_FORGOT_WASM" ]; then
+  echo "  Downloading zellij-forgot ${ZELLIJ_FORGOT_VERSION}..."
+  if run_cmd curl -fsSL -L -o "$ZELLIJ_FORGOT_WASM" \
+    "https://github.com/karimould/zellij-forgot/releases/download/${ZELLIJ_FORGOT_VERSION}/zellij_forgot.wasm"; then
+    diag_ok "zellij-forgot plugin downloaded"
+  else
+    diag_fail "zellij-forgot plugin download failed"
+  fi
+else
+  echo "  zellij_forgot.wasm already exists — skipping download."
+  diag_ok "zellij-forgot plugin (already present)"
+fi
+
+###############################################################################
+# zellij-bar-theme-config (zellij-tab-config)                                 #
+###############################################################################
+
+echo ""
+echo "--- zellij-tab-config ---"
+
+ZELLIJ_TAB_CONFIG_BIN="$HOME/.local/bin/zellij-tab-config"
+if [ ! -f "$ZELLIJ_TAB_CONFIG_BIN" ]; then
+  if command -v cargo &>/dev/null; then
+    echo "  Building zellij-tab-config from source..."
+    if ! $DRY_RUN; then
+      ZTMP="$(mktemp -d)"
+      git clone --depth 1 https://github.com/allisonhere/zellij-bar-theme-config "$ZTMP/repo" 2>/dev/null
+      cargo build --release --manifest-path "$ZTMP/repo/zellij-tab-config/Cargo.toml"
+      mkdir -p "$HOME/.local/bin"
+      cp "$ZTMP/repo/zellij-tab-config/target/release/zellij-tab-config" "$ZELLIJ_TAB_CONFIG_BIN"
+      chmod +x "$ZELLIJ_TAB_CONFIG_BIN"
+      rm -rf "$ZTMP"
+      diag_ok "zellij-tab-config installed"
+    else
+      echo "  [dry-run] git clone + cargo build --release zellij-tab-config"
+      echo "  [dry-run] cp zellij-tab-config → $ZELLIJ_TAB_CONFIG_BIN"
+    fi
+  else
+    echo "  cargo not found — skipping zellij-tab-config build."
+    diag_fail "zellij-tab-config (cargo not found)"
+  fi
+else
+  echo "  zellij-tab-config already installed at $ZELLIJ_TAB_CONFIG_BIN — skipping."
+  diag_ok "zellij-tab-config (already present)"
+fi
+
 ###############################################################################
 # Zplug                                                                       #
 ###############################################################################
