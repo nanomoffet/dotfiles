@@ -1,1 +1,3 @@
-../../.dotfiles/.config/yazi/yazi.toml
+# Yazi configuration
+# See https://yazi-rs.github.io/docs/configuration/yazi for available options.
+# This file is intentionally empty; yazi will fall back to its built-in defaults.
