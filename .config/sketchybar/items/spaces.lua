@@ -50,7 +50,6 @@ sbar.exec("aerospace list-workspaces --all", function(spaces)
 
 		space:subscribe("aerospace_workspace_change", function(env)
 			local selected = env.FOCUSED_WORKSPACE == space_name
-			local color = selected and colors.grey or colors.bg2
 			space:set({
 				icon = { highlight = selected },
 				label = { highlight = selected },

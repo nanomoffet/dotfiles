@@ -13,9 +13,10 @@ sbar.hotload(true)
 sbar.add("event", "aerospace_workspace_change")
 sbar.end_config()
 
+-- Fire startup triggers before entering the event loop
+sbar.trigger("space_windows_change")
+sbar.trigger("aerospace_workspace_change")
+
 -- Run the event loop of the sketchybar module (without this there will be no
 -- callback functions executed in the lua module)
 sbar.event_loop()
-
-sbar.trigger("space_windows_change")
-sbar.trigger("aerospace_workspace_change")

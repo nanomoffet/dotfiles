@@ -31,12 +31,12 @@ layout {
                 mode_prompt      "#[bg=#282a36,fg=#6272a4] NORMAL "
 
                 // Tabs — ribbon navigation: pill-shaped tabs with powerline arrows
-                tab_normal            "#[bg=#282a36,fg=#44475a]#[bg=#44475a,fg=#6272a4] {name} #[bg=#282a36,fg=#44475a]"
-                tab_active            "#[bg=#282a36,fg=#50fa7b]#[bg=#50fa7b,fg=#282a36,bold] {name} #[bg=#282a36,fg=#50fa7b]"
-                tab_normal_fullscreen "#[bg=#282a36,fg=#44475a]#[bg=#44475a,fg=#6272a4] {name} 󰊛 #[bg=#282a36,fg=#44475a]"
-                tab_active_fullscreen "#[bg=#282a36,fg=#50fa7b]#[bg=#50fa7b,fg=#282a36,bold] {name} 󰊛 #[bg=#282a36,fg=#50fa7b]"
-                tab_normal_sync       "#[bg=#282a36,fg=#44475a]#[bg=#44475a,fg=#6272a4] {name}  #[bg=#282a36,fg=#44475a]"
-                tab_active_sync       "#[bg=#282a36,fg=#50fa7b]#[bg=#50fa7b,fg=#282a36,bold] {name}  #[bg=#282a36,fg=#50fa7b]"
+                tab_normal            "#[bg=#44475a,fg=#282a36]#[bg=#44475a,fg=#6272a4] {name} #[bg=#282a36,fg=#44475a]"
+                tab_active            "#[bg=#50fa7b,fg=#282a36]#[bg=#50fa7b,fg=#282a36,bold] {name} #[bg=#282a36,fg=#50fa7b]"
+                tab_normal_fullscreen "#[bg=#44475a,fg=#282a36]#[bg=#44475a,fg=#6272a4] {name} 󰊛 #[bg=#282a36,fg=#44475a]"
+                tab_active_fullscreen "#[bg=#50fa7b,fg=#282a36]#[bg=#50fa7b,fg=#282a36,bold] {name} 󰊛 #[bg=#282a36,fg=#50fa7b]"
+                tab_normal_sync       "#[bg=#44475a,fg=#282a36]#[bg=#44475a,fg=#6272a4] {name}  #[bg=#282a36,fg=#44475a]"
+                tab_active_sync       "#[bg=#50fa7b,fg=#282a36]#[bg=#50fa7b,fg=#282a36,bold] {name}  #[bg=#282a36,fg=#50fa7b]"
 
                 // Git branch — update every 10 s, static render
                 command_git_branch_command    "git rev-parse --abbrev-ref HEAD"

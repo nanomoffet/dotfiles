@@ -17,3 +17,4 @@ if [[ -d "$ZSHCONF_DIR" ]]; then
         source "${conf}"
     done
 fi
+autoload -U compinit; compinit

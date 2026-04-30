@@ -32,3 +32,12 @@ if [[ -n "$ZELLIJ" ]]; then
     add-zsh-hook chpwd _zellij_tab_rename
     _zellij_tab_rename   # set name on shell start
 fi
+
+# Yazi – shell wrapper that changes CWD on exit
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
