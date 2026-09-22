@@ -1,0 +1,9 @@
+version: 1
+current_profile: 915514fa-a13c-4857-a38f-b36ff07f62bc:712020:562b155e-136d-4fa6-ae22-91a1efc001e1
+profiles:
+    - site: jumper-media.atlassian.net
+      cloud_id: 915514fa-a13c-4857-a38f-b36ff07f62bc
+      account_id: 712020:562b155e-136d-4fa6-ae22-91a1efc001e1
+      display_name: michael
+      email: michael@jumpermedia.co
+      auth_type: oauth

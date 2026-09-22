@@ -1,0 +1,40 @@
+# Identity
+set realname = "Michael Moffet"
+set from = "michael@jumpermedia.co"
+
+# IMAP inbox
+set folder = "imaps://imap.gmail.com/"
+set spoolfile = "+INBOX"
+set imap_user = "michael@jumpermedia.co"
+# set imap_pass = "secret"   # or leave unset to be prompted
+
+# Common IMAP folders
+set postponed = "+Drafts"
+set record    = "+Sent"
+set trash     = "+Trash"
+
+# SMTP sending
+set smtp_url  = "smtps://you@example.com@smtp.example.com:465/"
+# set smtp_pass = "secret"   # or leave unset to be prompted
+
+# Editor for composing messages
+set editor = "vim"
+
+# Basic behaviour
+set sort         = threads        # thread messages by conversation
+set sort_aux     = reverse-last-date-received
+set mark_old     = no             # don't mark new messages as old on exit
+set mime_forward = ask-yes        # ask whether to forward as attachment
+
+# Headers to hide in the pager
+ignore *
+unignore from: to: cc: date: subject:
+hdr_order from: to: cc: date: subject:
+
+
+
+
+set spoolfile = "+INBOX"
+set postponed = "+[Gmail]/Drafts"
+set record = "+[Gmail]/Sent Mail"
+set trash = "+[Gmail]/Trash"
